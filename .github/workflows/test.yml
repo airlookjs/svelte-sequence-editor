@@ -1,8 +1,6 @@
 name: Test
 on: [push]
 
-
-
 jobs:
     build:
         strategy:
@@ -20,6 +18,8 @@ jobs:
             with:
               version: 8
               run_install: true
+          - name: Install Playwright Browsers
+            run: npx playwright install --with-deps
           - run: pnpm test
 
 
