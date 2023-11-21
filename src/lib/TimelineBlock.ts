@@ -27,7 +27,7 @@ export class TimelineBlock implements ITimelineChild {
 		[key: string]: unknown;
 	};
 
-	errors: string[] = [];
+	errors: {type: string, message: string}[] = [];
 
 	private _inTime?: number;
 	private _outTime?: number;
