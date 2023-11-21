@@ -1,25 +1,41 @@
 name: Test
 on: [push]
 
+# cancel in-progress runs on new commits to same PR (gitub.event.number)
+concurrency:
+    group: ${{ github.workflow }}-${{ github.event.number || github.sha }}
+    cancel-in-progress: true
+
+permissions:
+    contents: read
+
 jobs:
-    build:
+    Lint:
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v4
+          - uses: pnpm/action-setup@v2.4.0
+          - uses: actions/setup-node@v4
+            with:
+              node-version: '20.x'
+              cache: pnpm
+          - run: pnpm install --frozen-lockfile
+          - run: pnpm run lint
+          - run: pnpm run check
+    Tests:
         strategy:
             matrix:
               node-version: ['18.x', '20.x']
         runs-on: ubuntu-latest
         steps:
           - uses: actions/checkout@v4
-          - name: Use Node.js ${{ matrix.node-version }}
-            uses: actions/setup-node@v3
+          - uses: pnpm/action-setup@v2
+          - uses: actions/setup-node@v4
             with:
               node-version: ${{ matrix.node-version }}
-          - name: Install pnpm
-            uses: pnpm/action-setup@v2
-            with:
-              version: 8
-              run_install: true
-          - name: Install Playwright Browsers
-            run: npx playwright install --with-deps
+              cache: pnpm
+          
+          - run: npx playwright install --with-deps
           - run: pnpm test
 
 
