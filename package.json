@@ -1,6 +1,6 @@
 {
 	"name": "@airlookjs/svelte-sequence-editor",
-	"version": "1.0.4",
+	"version": "1.0.5",
 	"author": "Johan Bichel Lindegaard <public@johan.cc>",
 	"license": "MIT",
 	"homepage": "https://github.com/airlookjs/svelte-sequence-editor#readme",
@@ -17,9 +17,9 @@
 		"type": "git",
 		"url": "git+https://github.com/airlookjs/svelte-sequence-editor.git"
 	},
-  "publishConfig": {
-    "access": "public"
-  },
+	"publishConfig": {
+		"access": "public"
+	},
 	"scripts": {
 		"dev": "vite dev",
 		"build": "svelte-kit sync && svelte-package",
