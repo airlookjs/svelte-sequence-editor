@@ -1,45 +1,43 @@
 name: CI
 on:
-    push:
-      branches:
-        - master
-    pull_request:
+  push:
+    branches:
+      - main
+  pull_request:
 
 # cancel in-progress runs on new commits to same PR (gitub.event.number)
 concurrency:
-    group: ${{ github.workflow }}-${{ github.event.number || github.sha }}
-    cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.event.number || github.sha }}
+  cancel-in-progress: true
 
 permissions:
-    contents: read
+  contents: read
 
 jobs:
-    Lint:
-        runs-on: ubuntu-latest
-        steps:
-          - uses: actions/checkout@v4
-          - uses: pnpm/action-setup@v2.4.0
-          - uses: actions/setup-node@v4
-            with:
-              node-version: '20.x'
-              cache: pnpm
-          - run: pnpm install --frozen-lockfile
-          - run: pnpm run lint
-          - run: pnpm run check
-    Tests:
-        strategy:
-            matrix:
-              node-version: ['18.x', '20.x']
-        runs-on: ubuntu-latest
-        steps:
-          - uses: actions/checkout@v4
-          - uses: pnpm/action-setup@v2
-          - uses: actions/setup-node@v4
-            with:
-              node-version: ${{ matrix.node-version }}
-              cache: pnpm
-          
-          - run: npx playwright install --with-deps
-          - run: pnpm test
+  Lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2.4.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run lint
+      - run: pnpm run check
+  Tests:
+    strategy:
+      matrix:
+        node-version: ['18.x', '20.x']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: pnpm
 
-
+      - run: npx playwright install --with-deps
+      - run: pnpm test
