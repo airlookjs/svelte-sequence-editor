@@ -38,6 +38,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: pnpm
-
+      - run: pnpm install --frozen-lockfile
       - run: npx playwright install --with-deps
       - run: pnpm test
