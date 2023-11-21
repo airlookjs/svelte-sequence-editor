@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/airlookjs/svelte-sequence-editor/compare/v1.0.4...v1.0.5) (2023-11-21)
+
+
+### Bug Fixes
+
+* **CI:** access public ([ddd867d](https://github.com/airlookjs/svelte-sequence-editor/commit/ddd867d0bc11c730330e24fd7e3044590897b6cd))
+
 ## [1.0.4](https://github.com/airlookjs/svelte-sequence-editor/compare/v1.0.3...v1.0.4) (2023-11-21)
 
 
