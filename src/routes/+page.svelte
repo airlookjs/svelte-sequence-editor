@@ -150,14 +150,13 @@
 	};
 
 	import { createTimeline } from '$lib/createTimeline';
-	import { writable } from 'svelte/store';
 
 	const timeline = createTimeline({
 		initialData: template.layers,
 		duration: look.duration
 	});
 
-	const { options, duration, errors, flatKeys, getBlockStore } = timeline;
+	const { options, duration, flatKeys, getBlockStore } = timeline;
 
 	let timelineComponent;
 
@@ -178,7 +177,7 @@
 </script>
 
 <header class="p-6">
-	<h1 class="text-4xl">Svelte Timeline Editor</h1>
+	<h1 class="text-4xl">Svelte Sequence Editor</h1>
 </header>
 
 <main class="p-6">
@@ -211,10 +210,6 @@
 				$footageTimelineblock.absoluteInTime = e.target.value;
 			}}
 		/>
-
-		{#each $errors as error}
-			<p class="color:red">{error}</p>
-		{/each}
 
 		<Timeline {options} {duration} {timeline} bind:this={timelineComponent} />
 	</section>

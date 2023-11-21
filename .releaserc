@@ -1,5 +1,13 @@
 {
   "branches": ["main"],
+  "plugins": [
+    [
+      "@semantic-release/commit-analyzer",
+      {
+        "preset": "eslint"
+      }
+    ]
+    ],
   "prepare": [
     {
       "path": "@semantic-release/changelog"
@@ -14,3 +22,4 @@
     ]
   ]
 }
+
