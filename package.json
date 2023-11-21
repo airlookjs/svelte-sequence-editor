@@ -17,6 +17,9 @@
 		"type": "git",
 		"url": "git+https://github.com/airlookjs/svelte-sequence-editor.git"
 	},
+  "publishConfig": {
+    "access": "public"
+  },
 	"scripts": {
 		"dev": "vite dev",
 		"build": "svelte-kit sync && svelte-package",
