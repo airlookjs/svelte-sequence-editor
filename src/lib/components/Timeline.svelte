@@ -30,7 +30,7 @@
 		width,
 		selectedHandle,
 		scrubOverride,
-		setTime: (_value) => time.set(_value),
+		setTime: (_value) => time.set(_value)
 	};
 
 	setContext(key, context);
@@ -46,15 +46,14 @@
 	let timelineEl: HTMLElement | null;
 
 	const handleTimelinePointerMove = (e: PointerEvent) => {
-		if ($selectedHandle || $scrubOverride) {
-		} else {
+		if (!$selectedHandle && !$scrubOverride) {
 			const x = e.clientX - (timelineEl?.offsetLeft ?? 0);
 			time.set(Math.min(Math.max((x / $width) * $duration, 0), $duration));
 		}
 	};
 
-	const handleTimelinePointerUp = (e: PointerEvent) => {
-		const x = e.clientX - (timelineEl?.offsetLeft ?? 0);
+	const handleTimelinePointerUp = () => {
+		//const x = e.clientX - (timelineEl?.offsetLeft ?? 0);
 		//time.set(Math.min(Math.max((x / $width) * $duration, 0), $duration));
 		selectedHandle.set(null);
 	};
@@ -68,8 +67,6 @@
 	};
 
 	$: gridBackground = getGridBackground($duration);
-
-
 </script>
 
 <!-- Could likely be implemented more elegantly pending popular feature request in svelte, but it works like this -->

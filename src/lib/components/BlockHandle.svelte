@@ -20,7 +20,11 @@
 
 <button
 	class="tl-handle tl-{type.toLowerCase()} {active ? 'tl-active' : ''}"
-	style={ disabled ? 'cursor: not-allowed' : typeof fixed == 'number' ? 'cursor: default' : 'cursor: ew-resize'}
+	style={disabled
+		? 'cursor: not-allowed'
+		: typeof fixed == 'number'
+		  ? 'cursor: default'
+		  : 'cursor: ew-resize'}
 	on:pointerdown
 	on:mouseover
 	on:focus

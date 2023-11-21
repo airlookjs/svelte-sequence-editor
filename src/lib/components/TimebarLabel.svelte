@@ -4,7 +4,7 @@
 	import type { TimelineContext } from '../shared';
 	import { key } from './key';
 
-	const { duration, width, scrubOverride, selectedHandle }: TimelineContext = getContext(key);
+	const { duration, width }: TimelineContext = getContext(key);
 
 	export let formatFn = (value: number) => `${Math.round(value)}`;
 	export let time: number;

@@ -156,11 +156,11 @@
 		duration: look.duration
 	});
 
-	const { options, duration, flatKeys, getBlockStore } = timeline;
+	const { options, duration, getBlockStore } = timeline;
 
 	let timelineComponent;
 
-	const newLook = {
+	/*const newLook = {
 		duration: $duration,
 		components: [
 			{
@@ -169,7 +169,7 @@
 				outTime: 10000
 			}
 		]
-	};
+	};*/
 
 	//		<number input="number" name="videoin" bind:value={timeline.getBlockByKey('video.footage')} />
 

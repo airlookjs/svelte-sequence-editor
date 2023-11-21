@@ -1,9 +1,6 @@
 <script lang="ts">
 	import { Timeline, Layer, Timebar, Block } from '$lib';
-	import { quadOut } from 'svelte/easing';
-	import { sampleData1, sampleData2 } from '../data';
-
-	import { createTimeline } from '$lib/createTimeline';
+	import { sampleData2 } from '../data';
 </script>
 
 <section class="pb-6">

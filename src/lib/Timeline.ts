@@ -33,7 +33,7 @@ export class Timeline implements ITimelineCommon {
 		if (this.options.errorHandler) {
 			this.options.errorHandler(error);
 		} else {
-			console.error(error)
+			console.error(error);
 		}
 	}
 
@@ -43,8 +43,7 @@ export class Timeline implements ITimelineCommon {
 		//const durationDiff = duration - this.duration;
 
 		if (duration < this.getMinDuration()) {
-
-			if(this.options.errorHandler) {
+			if (this.options.errorHandler) {
 				this.options.errorHandler({
 					type: 'duration',
 					message: `Duration can not be set below ${this.getMinDuration()}. Try to remove some elements.`

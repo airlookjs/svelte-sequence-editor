@@ -6,10 +6,7 @@
 
 	import TimebarLabel from './TimebarLabel.svelte';
 
-	const { time, duration, width, scrubOverride, selectedHandle }: TimelineContext = getContext(key);
-
-	let blockEndWidth: number;
-	let blockEndPos: number;
+	const { time, duration, scrubOverride, selectedHandle }: TimelineContext = getContext(key);
 
 	export let formatTimeFn = (value: number) => `${Math.round(value)}`;
 

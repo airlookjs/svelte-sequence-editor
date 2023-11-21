@@ -25,9 +25,9 @@ jobs:
       - uses: pnpm/action-setup@v2
       - uses: actions/setup-node@v4
         with:
-          node-version: "20.x"
+          node-version: '20.x'
           cache: pnpm
-      
+
       - run: pnpm install --frozen-lockfile
       - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
         run: npm audit signatures
