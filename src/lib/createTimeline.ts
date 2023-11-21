@@ -32,7 +32,7 @@ export const deepFlat = (data: TTimelineChild[]) => {
 export const createTimeline = ({
 	initialData,
 	duration,
-	options, 
+	options
 }: {
 	initialData: TTimelineLayerOptions[];
 	duration?: number; // | Writable<number>

@@ -2,7 +2,6 @@ import type { Writable } from 'svelte/store';
 import { Timeline } from './Timeline';
 import { TimelineLayer } from './TimelineLayer';
 import { TimelineBlock } from './TimelineBlock';
-import { error } from '@sveltejs/kit';
 
 type TimelineBlockHandleType = 'inTime' | 'outTime' | 'block'; // TODO: enum
 
@@ -21,7 +20,7 @@ export type TimelineValidationOptions = {
 export type TTimelineOptions = {
 	validations?: TimelineValidationOptions;
 	roundingBase: () => number;
-	errorHandler?: (error: {type: string, message: string}) => void;
+	errorHandler?: (error: { type: string; message: string }) => void;
 };
 
 export interface ITimelineCommonOptions {
@@ -57,7 +56,7 @@ export interface ITimelineCommon {
 	getTimeline(): Timeline;
 	getByKey(absoluteKey: string): ITimelineChild | null;
 
-	errors: {type: string, message: string}[];
+	errors: { type: string; message: string }[];
 	layers?: TimelineLayer[];
 	blocks?: TimelineBlock[];
 

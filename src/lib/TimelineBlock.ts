@@ -45,7 +45,11 @@ export class TimelineBlock implements ITimelineChild {
 		//this.outTime = options.outTime || 0;
 
 		this.parent = parent;
-		this.key = getUniqueKey(options.key, index+1, parent.blocks.map((block) => block.key));
+		this.key = getUniqueKey(
+			options.key,
+			index + 1,
+			parent.blocks.map((block) => block.key)
+		);
 
 		this.data = options.data;
 

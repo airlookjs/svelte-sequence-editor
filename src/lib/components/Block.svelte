@@ -10,7 +10,7 @@
 	import BlockHandle from '../components/BlockHandle.svelte';
 
 	import type { TimelineBlock } from '../TimelineBlock';
-	import type { TimelineContext, TSelectedHandle } from '../shared';
+	import type { TimelineContext } from '../shared';
 
 	const { duration, width, selectedHandle, timeline, time, scrubOverride }: TimelineContext =
 		getContext(key);
@@ -114,7 +114,6 @@
 				//console.log("snap off")
 			}
 
-			let moved = false; // TODO: check if actually moved
 			let res;
 
 			if (handle == 'block') {
@@ -128,8 +127,6 @@
 				time.set(block.absoluteOutTime);
 			}
 
-			//console.log(res);
-
 			if (!snapBlockState && res?.blocked) {
 				snapBlockStartTime = new Date().getTime();
 				snapBlockState = true;
@@ -137,8 +134,6 @@
 				//console.log('snap on');
 			} else {
 				if (res && res.moved != 0) {
-					//console.log("moved")
-					moved = true;
 					accDeltaTime -= res.moved;
 				}
 
@@ -150,7 +145,7 @@
 			}
 		}
 	};
-	const releaseHandle = (e: PointerEvent) => {
+	const releaseHandle = () => {
 		accDeltaTime = 0;
 		if (handle) {
 			snapBlockState = false;
@@ -167,7 +162,11 @@
 	let className = '';
 	export { className as class };
 	let moveable = true; // !(block.validations?.inTime?.fixed || block.validations?.outTime?.fixed);
-	$: cursorClass = disabled ? 'cursor: not-allowed' : moveable && !noHandles ? 'cursor: grab' : 'cursor: default';
+	$: cursorClass = disabled
+		? 'cursor: not-allowed'
+		: moveable && !noHandles
+		  ? 'cursor: grab'
+		  : 'cursor: default';
 	const bgColor = 'bg-amber-200';
 
 	let blockLeft: number, blockRight: number, blockWidth: number;

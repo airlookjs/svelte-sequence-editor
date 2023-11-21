@@ -8,11 +8,10 @@
 	import { key } from './key';
 	import { afterUpdate, getContext } from 'svelte';
 	import { uniqueClasses } from '../utils';
-	import { fade, fly } from 'svelte/transition';
+	import { fade } from 'svelte/transition';
 	import type { TimelineContext } from '../shared';
 	import type { TimelineLayer } from '../TimelineLayer';
 	import type { TimelineBlock } from '$lib/TimelineBlock';
-	import Timeline from './Timeline.svelte';
 
 	//export let animate: FlipParams = {};
 	const { width, duration }: TimelineContext = getContext(key);
@@ -21,8 +20,8 @@
 	export let data: TimelineLayer;
 
 	export let disabled = false;
-	
-	$: layer = data; 
+
+	$: layer = data;
 	$: inTime = layer.getInTime();
 	$: outTime = layer.getOutTime();
 

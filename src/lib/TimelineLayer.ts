@@ -35,10 +35,9 @@ export class TimelineLayer implements ITimelineChild {
 	}
 
 	public addBlock(blockOptions: TTimelineBlockOptions, insertAtIndex?: number) {
-
 		const block = new TimelineBlock(blockOptions, insertAtIndex ?? this.blocks.length, this);
 
-		if(insertAtIndex !== undefined) {
+		if (insertAtIndex !== undefined) {
 			this.blocks.splice(insertAtIndex, 0, block);
 
 			// Reindex
@@ -46,11 +45,10 @@ export class TimelineLayer implements ITimelineChild {
 				_block.index = index;
 				return _block;
 			});
-
 		} else {
 			this.blocks.push(block);
 		}
-		
+
 		block.initialize();
 		return block;
 	}
