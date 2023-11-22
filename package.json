@@ -10,12 +10,12 @@
 	"keywords": [
 		"svelte",
 		"timeline",
-    "sequence",
-    "broadcast",
-    "UI",
-    "media",
-    "video",
-    "audio",
+		"sequence",
+		"broadcast",
+		"UI",
+		"media",
+		"video",
+		"audio",
 		"editor",
 		"form"
 	],
