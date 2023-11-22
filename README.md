@@ -10,7 +10,7 @@ UI widget and logic for editing timed sequences in recursively nested structures
 ## Installation
 
 ```bash
-$ npm install -D svelte-sequence-editor
+$ npm install svelte-sequence-editor
 ```
 
 ## Usage
