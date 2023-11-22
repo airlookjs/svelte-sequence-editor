@@ -1,11 +1,11 @@
-export { default as Timeline } from './components/Timeline.svelte';
-export { default as Layer } from './components/Layer.svelte';
-export { default as Timebar } from './components/Timebar.svelte';
-export { default as Block } from './components/Block.svelte';
-export { default as BlockHandle } from './components/BlockHandle.svelte';
-export { createTimeline, deepFlat } from './createTimeline';
+export { default as Sequence } from './components/Sequence.svelte';
+export { default as SequenceTimebar } from './components/Timebar.svelte';
+export { default as SequenceLayer } from './components/Layer.svelte';
+export { default as SequenceBlock } from './components/Block.svelte';
+export { default as SequenceBlockHandle } from './components/BlockHandle.svelte';
+export { createSequence, deepFlat } from './createSequence';
 
-export { TimelineBlock } from './TimelineBlock';
-export { TimelineLayer } from './TimelineLayer';
+export { Block } from './Block';
+export { Layer } from './Layer';
 
-export type { TTimelineOptions, TTimelineLayerOptions, ITimelineCommonOptions } from './types';
+export type { TSequenceOptions, TSequenceLayerOptions, ISequenceCommonOptions } from './types';

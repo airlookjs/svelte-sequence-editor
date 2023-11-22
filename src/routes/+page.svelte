@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Timeline } from '$lib';
+	import { Sequence } from '$lib';
 
 	const PromoterBlockTemplate = {
 		key: 'promoter',
@@ -149,16 +149,16 @@
 		]
 	};
 
-	import { createTimeline } from '$lib/createTimeline';
+	import { createSequence } from '$lib/createSequence';
 
-	const timeline = createTimeline({
+	const sequence = createSequence({
 		initialData: template.layers,
 		duration: look.duration
 	});
 
-	const { options, duration, getBlockStore } = timeline;
+	const { options, duration, getBlockStore } = sequence;
 
-	let timelineComponent;
+	let sequenceComponent;
 
 	/*const newLook = {
 		duration: $duration,
@@ -171,9 +171,9 @@
 		]
 	};*/
 
-	//		<number input="number" name="videoin" bind:value={timeline.getBlockByKey('video.footage')} />
+	//		<number input="number" name="videoin" bind:value={sequence.getBlockByKey('video.footage')} />
 
-	$: footageTimelineblock = getBlockStore('video.footage')!;
+	$: footageblock = getBlockStore('video.footage')!;
 </script>
 
 <header class="p-6">
@@ -183,13 +183,13 @@
 <main class="p-6">
 	<section class="pb-6">
 		<h2 class="text-2xl">Getting started</h2>
-		<pre>pnpm install -D svelte-timeline-editor</pre>
+		<pre>pnpm install -D svelte-sequence-editor</pre>
 	</section>
 
 	<section class="pb-6">
 		<h2 class="text-2xl">Example</h2>
 
-		<h3>Bind data from a form to the timeline</h3>
+		<h3>Bind data from a form to the sequence editor</h3>
 
 		<label for="duration">Duration</label>
 		<input
@@ -205,12 +205,12 @@
 		<input
 			type="number"
 			name="videoin"
-			value={$footageTimelineblock.absoluteInTime}
+			value={$footageblock.absoluteInTime}
 			on:change={(e) => {
-				$footageTimelineblock.absoluteInTime = e.target.value;
+				$footageblock.absoluteInTime = e.target.value;
 			}}
 		/>
 
-		<Timeline {options} {duration} {timeline} bind:this={timelineComponent} />
+		<Sequence {options} {duration} {sequence} bind:this={sequenceComponent} />
 	</section>
 </main>

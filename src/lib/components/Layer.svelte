@@ -9,15 +9,15 @@
 	import { afterUpdate, getContext } from 'svelte';
 	import { uniqueClasses } from '../utils';
 	import { fade } from 'svelte/transition';
-	import type { TimelineContext } from '../shared';
-	import type { TimelineLayer } from '../TimelineLayer';
-	import type { TimelineBlock } from '$lib/TimelineBlock';
+	import type { SequenceContext } from '../shared';
+	import type { Layer } from '../Layer';
+	import type { Block } from '$lib/Block';
 
 	//export let animate: FlipParams = {};
-	const { width, duration }: TimelineContext = getContext(key);
+	const { width, duration }: SequenceContext = getContext(key);
 	let layerEl: HTMLElement | null;
 
-	export let data: TimelineLayer;
+	export let data: Layer;
 
 	export let disabled = false;
 
@@ -50,7 +50,7 @@
 	let nestedLayerCount = 0;
 	$: {
 		let _nestedLayerCount = 0;
-		const recurse = (blocks: TimelineBlock[]) => {
+		const recurse = (blocks: Block[]) => {
 			blocks.forEach((block) => {
 				if (block.layers) {
 					block.layers.forEach((_layer) => {
@@ -121,7 +121,7 @@
 	</slot>
 </svelte:element>
 
-<!-- @component `Layer` must be descendent of `Timeline`. -->
+<!-- @component `SequenceLayer` must be descendent of `Sequence`. -->
 <style lang="postcss">
 	.tl-layer-container {
 		@apply block relative;
