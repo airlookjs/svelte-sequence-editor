@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/airlookjs/svelte-sequence-editor/compare/v1.0.5...v1.0.6) (2023-11-22)
+
+
+### Bug Fixes
+
+* **package:** build and include dist ([03ec611](https://github.com/airlookjs/svelte-sequence-editor/commit/03ec61126a29f3d652dfeb382c32ea49b3c25088))
+
 ## [1.0.5](https://github.com/airlookjs/svelte-sequence-editor/compare/v1.0.4...v1.0.5) (2023-11-21)
 
 
