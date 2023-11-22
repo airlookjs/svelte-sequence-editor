@@ -9,13 +9,13 @@
 	import Layer from '../components/Layer.svelte';
 	import BlockHandle from '../components/BlockHandle.svelte';
 
-	import type { TimelineBlock } from '../TimelineBlock';
-	import type { TimelineContext } from '../shared';
+	import type { Block } from '../Block';
+	import type { SequenceContext } from '../shared';
 
-	const { duration, width, selectedHandle, timeline, time, scrubOverride }: TimelineContext =
+	const { duration, width, selectedHandle, sequence, time, scrubOverride }: SequenceContext =
 		getContext(key);
 
-	export let block: TimelineBlock;
+	export let block: Block;
 
 	let blockEl: HTMLElement | null;
 	type BlockHandleType = 'inTime' | 'outTime' | 'block';
@@ -137,7 +137,7 @@
 					accDeltaTime -= res.moved;
 				}
 
-				timeline.set($timeline);
+				sequence.set($sequence);
 				selectedHandle.update((val) => {
 					if (val) val.block = block;
 					return val;

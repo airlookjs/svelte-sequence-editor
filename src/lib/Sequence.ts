@@ -1,28 +1,28 @@
-import { TimelineLayer } from './TimelineLayer';
+import { Layer } from './Layer';
 import type {
-	ITimelineCommon,
-	TTimelineOptions,
-	TTimelineLayerOptions,
-	ITimelineChild
+	ISequenceCommon,
+	TSequenceOptions,
+	TSequenceLayerOptions,
+	ISequenceChild
 } from './types';
 
-export class Timeline implements ITimelineCommon {
+export class Sequence implements ISequenceCommon {
 	duration: number;
-	layers: TimelineLayer[];
-	options: TTimelineOptions;
+	layers: Layer[];
+	options: TSequenceOptions;
 
-	constructor(layers: TTimelineLayerOptions[], duration: number, options: TTimelineOptions) {
+	constructor(layers: TSequenceLayerOptions[], duration: number, options: TSequenceOptions) {
 		this.duration = duration;
 		this.options = options;
-		//console.debug('Timeline constructor', layers, duration, options);
+		//console.debug('Sequence constructor', layers, duration, options);
 
 		this.layers = layers.map((layer) => {
-			return new TimelineLayer(layer, this);
+			return new Layer(layer, this);
 		});
 	}
 
-	public addLayer(layer: TTimelineLayerOptions) {
-		this.layers.push(new TimelineLayer(layer, this));
+	public addLayer(layer: TSequenceLayerOptions) {
+		this.layers.push(new Layer(layer, this));
 	}
 
 	public getDuration() {
@@ -100,7 +100,7 @@ export class Timeline implements ITimelineCommon {
 		});
 	}
 
-	public getTimeline() {
+	public getSequence() {
 		return this;
 	}
 
@@ -110,7 +110,7 @@ export class Timeline implements ITimelineCommon {
 		});
 	}
 
-	public getByKey(absKey: string): ITimelineChild | null {
+	public getByKey(absKey: string): ISequenceChild | null {
 		const parts = absKey.split('.');
 		const layer = this.layers.find((layer) => layer.key === parts[0]);
 		if (layer) {

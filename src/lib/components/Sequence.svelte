@@ -1,18 +1,18 @@
 <script lang="ts">
-	import Layer from '../components/Layer.svelte';
-	import Timebar from '../components/Timebar.svelte';
-	import type { TimelineContext, TSelectedHandle } from '../types';
-	import { key } from '../components/key';
+	import Layer from './Layer.svelte';
+	import Timebar from './Timebar.svelte';
+	import type { SequenceContext, TSelectedHandle } from '../types';
+	import { key } from './key';
 	import { writable } from 'svelte/store';
 	import { uniqueClasses } from '../utils';
 	import { setContext } from 'svelte';
-	import type { createTimeline } from '$lib/createTimeline';
+	import type { createSequence } from '$lib/createSequence';
 
-	export let timeline: ReturnType<typeof createTimeline>;
+	export let sequence: ReturnType<typeof createSequence>;
 	export let currentTime: null | number = null;
 
-	const timelineData = timeline.timeline;
-	const duration = timeline.duration;
+	const sequenceData = sequence.sequence;
+	const duration = sequence.duration;
 
 	let currentWidth: null | number = null;
 
@@ -23,10 +23,10 @@
 	const scrubOverride = writable(false);
 	const disabled = writable(false);
 
-	const context: TimelineContext = {
+	const context: SequenceContext = {
 		time,
 		duration,
-		timeline: timelineData,
+		sequence: sequenceData,
 		width,
 		selectedHandle,
 		scrubOverride,
@@ -36,24 +36,24 @@
 	setContext(key, context);
 
 	$: currentTime = $time;
-	let containerClasses = 'tl-timeline-container';
+	let containerClasses = 'tl-sequence-container';
 
 	let className = '';
 	export { className as class };
 
 	export let tag = 'div';
 
-	let timelineEl: HTMLElement | null;
+	let sequenceEl: HTMLElement | null;
 
-	const handleTimelinePointerMove = (e: PointerEvent) => {
+	const handlePointerMove = (e: PointerEvent) => {
 		if (!$selectedHandle && !$scrubOverride) {
-			const x = e.clientX - (timelineEl?.offsetLeft ?? 0);
+			const x = e.clientX - (sequenceEl?.offsetLeft ?? 0);
 			time.set(Math.min(Math.max((x / $width) * $duration, 0), $duration));
 		}
 	};
 
-	const handleTimelinePointerUp = () => {
-		//const x = e.clientX - (timelineEl?.offsetLeft ?? 0);
+	const handlePointerUp = () => {
+		//const x = e.clientX - (sequenceEl?.offsetLeft ?? 0);
 		//time.set(Math.min(Math.max((x / $width) * $duration, 0), $duration));
 		selectedHandle.set(null);
 	};
@@ -80,22 +80,22 @@
 	</svelte:element>
 </svelte:head>
 
-<svelte:window on:pointerup={handleTimelinePointerUp} />
+<svelte:window on:pointerup={handlePointerUp} />
 
 <svelte:element
 	this={tag}
-	bind:this={timelineEl}
+	bind:this={sequenceEl}
 	bind:clientWidth={$width}
-	on:pointermove={handleTimelinePointerMove}
+	on:pointermove={handlePointerMove}
 	class={uniqueClasses(`${containerClasses}${className ? ` ${className}` : ''}`)}
 	style={gridBackground}
 	{...$$restProps}
 >
-	<slot {currentTime} setTime={context.setTime} layers={$timelineData.layers}>
+	<slot {currentTime} setTime={context.setTime} layers={$sequenceData.layers}>
 		<Timebar />
 
-		{#if $timelineData.layers}
-			{#each $timelineData.layers as layer (layer.key)}
+		{#if $sequenceData.layers}
+			{#each $sequenceData.layers as layer (layer.key)}
 				<Layer disabled={$disabled} data={layer} />
 			{/each}
 		{/if}
@@ -103,7 +103,7 @@
 </svelte:element>
 
 <style lang="postcss">
-	.tl-timeline-container {
+	.tl-sequence-container {
 		@apply select-none pb-6 border rounded-md overflow-hidden relative;
 	}
 </style>

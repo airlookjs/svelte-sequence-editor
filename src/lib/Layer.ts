@@ -1,11 +1,11 @@
-import { TimelineBlock } from './TimelineBlock';
-import { Timeline } from './Timeline';
-import type { ITimelineChild, TTimelineLayerOptions, TTimelineBlockOptions } from './types';
+import { Block } from './Block';
+import { Sequence } from './Sequence';
+import type { ISequenceChild, TSequenceLayerOptions, TSequenceBlockOptions } from './types';
 
-export class TimelineLayer implements ITimelineChild {
-	parent: TimelineBlock | Timeline;
+export class Layer implements ISequenceChild {
+	parent: Block | Sequence;
 	sortIndex: number;
-	blocks: TimelineBlock[] = [];
+	blocks: Block[] = [];
 	key: string;
 	//duration?: number;
 	title?: string;
@@ -15,13 +15,13 @@ export class TimelineLayer implements ITimelineChild {
 
 	errors: string[] = [];
 
-	constructor(options: TTimelineLayerOptions, parent: TimelineBlock | Timeline) {
+	constructor(options: TSequenceLayerOptions, parent: Block | Sequence) {
 		this.parent = parent;
 		this.sortIndex = options.sortIndex ?? -1;
 		this.key = options.key ?? `layer-${crypto.randomUUID()}`;
 		this.data = options.data;
 
-		//console.log('TimelineLayer constructor', options, index);
+		//console.log('Layer constructor', options, index);
 
 		this.blocks =
 			options.blocks?.map((block, blockIndex) => {
@@ -30,12 +30,12 @@ export class TimelineLayer implements ITimelineChild {
 						block.inTime = options.blocks[blockIndex - 1].outTime;
 					}
 				}
-				return new TimelineBlock(block, blockIndex, this);
+				return new Block(block, blockIndex, this);
 			}) || [];
 	}
 
-	public addBlock(blockOptions: TTimelineBlockOptions, insertAtIndex?: number) {
-		const block = new TimelineBlock(blockOptions, insertAtIndex ?? this.blocks.length, this);
+	public addBlock(blockOptions: TSequenceBlockOptions, insertAtIndex?: number) {
+		const block = new Block(blockOptions, insertAtIndex ?? this.blocks.length, this);
 
 		if (insertAtIndex !== undefined) {
 			this.blocks.splice(insertAtIndex, 0, block);
@@ -68,7 +68,7 @@ export class TimelineLayer implements ITimelineChild {
 				}
 				return block;
 			})
-			.filter(Boolean) as TimelineBlock[];
+			.filter(Boolean) as Block[];
 
 		//console.log('removed block, now have blocks', this.blocks);
 
@@ -76,7 +76,7 @@ export class TimelineLayer implements ITimelineChild {
 	}
 
 	public getAbsoluteKey(): string {
-		if (this.parent instanceof Timeline) {
+		if (this.parent instanceof Sequence) {
 			return this.key;
 		}
 		return `${this.parent.getAbsoluteKey()}.${this.key}`;
@@ -101,34 +101,34 @@ export class TimelineLayer implements ITimelineChild {
 	}
 
 	public getAbsoluteInTime(): number {
-		if (this.parent instanceof TimelineBlock) {
+		if (this.parent instanceof Block) {
 			return this.parent.absoluteInTime;
 		}
 		return 0;
 	}
 
 	public getAbsoluteOutTime(): number {
-		if (this.parent instanceof Timeline) {
+		if (this.parent instanceof Sequence) {
 			return this.parent.duration;
 		}
 
-		// If its not the root timeline its always a block
+		// If its not the root its always a block
 		return this.parent.absoluteOutTime;
 	}
 
 	public getInTime(): number {
-		if (this.parent instanceof TimelineBlock) {
+		if (this.parent instanceof Block) {
 			return this.parent.inTime;
 		}
 		return 0;
 	}
 
 	public getOutTime(): number {
-		if (this.parent instanceof Timeline) {
+		if (this.parent instanceof Sequence) {
 			return this.parent.duration;
 		}
 
-		// If its not the root timeline its always a block
+		// If its not the root its always a block
 		return this.parent.outTime;
 	}
 
@@ -142,8 +142,8 @@ export class TimelineLayer implements ITimelineChild {
 		}, 0);
 	}
 
-	public getTimeline(): Timeline {
-		return this.parent.getTimeline();
+	public getSequence(): Sequence {
+		return this.parent.getSequence();
 	}
 
 	public validate() {
@@ -152,7 +152,7 @@ export class TimelineLayer implements ITimelineChild {
 		});
 	}
 
-	public getByKey(absKey: string): ITimelineChild | null {
+	public getByKey(absKey: string): ISequenceChild | null {
 		const parts = absKey.split('.');
 		const block = this.blocks.find((block) => block.key === parts[0]);
 		if (block) {

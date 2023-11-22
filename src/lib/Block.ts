@@ -1,6 +1,6 @@
-import type { TimelineValidationOptions, TTimelineBlockOptions } from './types';
-import { TimelineLayer } from './TimelineLayer';
-import type { ITimelineChild } from './types';
+import type { TValidationOptions, TSequenceBlockOptions } from './types';
+import { Layer } from './Layer';
+import type { ISequenceChild } from './types';
 import { getUniqueKey } from './utils';
 
 // TODO: get rid of string references to inTime and outTime use enum or similar instead
@@ -9,7 +9,7 @@ enum tHandles {
 	outTime = 'outTime'
 }
 
-const DEFAULT_VALIDATION_OPTIONS: Required<TimelineValidationOptions> = {
+const DEFAULT_VALIDATION_OPTIONS: Required<TValidationOptions> = {
 	[tHandles.inTime]: {},
 	[tHandles.outTime]: {},
 	duration: {
@@ -17,10 +17,10 @@ const DEFAULT_VALIDATION_OPTIONS: Required<TimelineValidationOptions> = {
 	}
 };
 
-export class TimelineBlock implements ITimelineChild {
-	layers: TimelineLayer[];
+export class Block implements ISequenceChild {
+	layers: Layer[];
 	index: number;
-	parent: TimelineLayer;
+	parent: Layer;
 	key: string;
 	title?: string;
 	data?: {
@@ -37,9 +37,9 @@ export class TimelineBlock implements ITimelineChild {
 		outTime?: number;
 	};
 
-	validations: TimelineValidationOptions;
+	validations: TValidationOptions;
 
-	constructor(options: TTimelineBlockOptions, index: number, parent: TimelineLayer) {
+	constructor(options: TSequenceBlockOptions, index: number, parent: Layer) {
 		this.index = index;
 		//this.inTime = options.inTime || 0;
 		//this.outTime = options.outTime || 0;
@@ -57,11 +57,11 @@ export class TimelineBlock implements ITimelineChild {
 
 		this.validations = {
 			...DEFAULT_VALIDATION_OPTIONS,
-			...parent.getTimeline().options.validations,
+			...parent.getSequence().options.validations,
 			...options.validations
 		};
 
-		// Initial values are absolute from root timeline
+		// Initial values are absolute from root
 		this.initialValues = {
 			inTime: options.inTime,
 			outTime: options.outTime
@@ -70,7 +70,7 @@ export class TimelineBlock implements ITimelineChild {
 		// Add sub layers
 		this.layers =
 			options.layers?.map((layer) => {
-				return new TimelineLayer(layer, this);
+				return new Layer(layer, this);
 			}) || [];
 	}
 
@@ -113,7 +113,7 @@ export class TimelineBlock implements ITimelineChild {
 	}
 
 	/**
-	 * Used to scale timeline blocks when the parent duration changes
+	 * Used to scale blocks when the parent duration changes
 	 * @param factor
 	 */
 	public scale(scaleFactor: number) {
@@ -207,7 +207,7 @@ export class TimelineBlock implements ITimelineChild {
 	}
 
 	public roundTime(time: number) {
-		const base = this.getTimeline().options.roundingBase();
+		const base = this.getSequence().options.roundingBase();
 		return Math.round(time / base) * base;
 	}
 
@@ -225,7 +225,7 @@ export class TimelineBlock implements ITimelineChild {
 
 		if (depth > 100) {
 			// TODO: global max recursive depth setting
-			throw new Error('Max recursion depth reached for timeline validation');
+			throw new Error('Max recursion depth reached for sequence validation');
 		}
 
 		//const debugPrefix = `sTc ${this.getAbsoluteKey()}.${prop}:${value} depth:${depth}`;
@@ -479,16 +479,16 @@ export class TimelineBlock implements ITimelineChild {
 		return this.parent.blocks[this.index + 1];
 	}
 
-	// Access root timeline from all layers and blocks
-	public getTimeline() {
-		return this.parent.getTimeline();
+	// Access root from all layers and blocks
+	public getSequence() {
+		return this.parent.getSequence();
 	}
 
 	public getLayer() {
 		return this.parent;
 	}
 
-	public getByKey(absKey: string): ITimelineChild | null {
+	public getByKey(absKey: string): ISequenceChild | null {
 		const parts = absKey.split('.');
 		const layer = this.layers.find((o) => o.key === parts[0]);
 		if (layer) {

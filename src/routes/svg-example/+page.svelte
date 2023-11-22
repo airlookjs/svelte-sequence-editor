@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { Timeline, Layer, Timebar, Block } from '$lib';
+	import { Sequence, SequenceLayer, SequenceTimebar, SequenceBlock } from '$lib';
 	import { sampleData2 } from '../data';
 </script>
 
 <section class="pb-6">
 	<h2 class="text-2xl">Example custom SVG rendering</h2>
-	<Timeline
+	<Sequence
 		tag="svg"
 		width="100%"
 		height="100%"
@@ -15,18 +15,18 @@
 	>
 		{#if layers}
 			{#each layers as layer (layer.key)}
-				<Layer tag="g" data={layer} let:block>
+				<SequenceLayer tag="g" data={layer} let:block>
 					<text slot="header">
 						custom header for {layer.key}
 					</text>
 
-					<Block {block} slot="blocks" tag="g">
+					<SequenceBlock {block} slot="blocks" tag="g">
 						<rect height="100%" width="10%" fill={'#333'} />
 						<text>Custom block</text>
-					</Block>
-				</Layer>
+					</SequenceBlock>
+				</SequenceLayer>
 			{/each}
 		{/if}
-		<Timebar />
-	</Timeline>
+		<SequenceTimebar />
+	</Sequence>
 </section>

@@ -1,29 +1,29 @@
 import type { Writable } from 'svelte/store';
-import { Timeline } from './Timeline';
-import { TimelineLayer } from './TimelineLayer';
-import { TimelineBlock } from './TimelineBlock';
+import { Sequence } from './Sequence';
+import { Layer } from './Layer';
+import { Block } from './Block';
 
-type TimelineBlockHandleType = 'inTime' | 'outTime' | 'block'; // TODO: enum
+type BlockHandleType = 'inTime' | 'outTime' | 'block'; // TODO: enum
 
-export type TimelineValidationOption = {
+export type TValidationOption = {
 	min?: number | { ref: string };
 	max?: number | { ref: string };
 	fixed?: number | { ref: string };
 };
 
-export type TimelineValidationOptions = {
-	duration?: TimelineValidationOption;
-	inTime?: TimelineValidationOption;
-	outTime?: TimelineValidationOption;
+export type TValidationOptions = {
+	duration?: TValidationOption;
+	inTime?: TValidationOption;
+	outTime?: TValidationOption;
 };
 
-export type TTimelineOptions = {
-	validations?: TimelineValidationOptions;
+export type TSequenceOptions = {
+	validations?: TValidationOptions;
 	roundingBase: () => number;
 	errorHandler?: (error: { type: string; message: string }) => void;
 };
 
-export interface ITimelineCommonOptions {
+export interface ISequenceCommonOptions {
 	key: string;
 	title?: string;
 	data?: {
@@ -32,33 +32,33 @@ export interface ITimelineCommonOptions {
 	};
 }
 
-export type TTimelineLayerOptions = ITimelineCommonOptions & {
-	blocks: Array<TTimelineBlockOptions>;
+export type TSequenceLayerOptions = ISequenceCommonOptions & {
+	blocks: Array<TSequenceBlockOptions>;
 	sortIndex?: number;
 };
 
-export type TTimelineBlockOptions = ITimelineCommonOptions & {
+export type TSequenceBlockOptions = ISequenceCommonOptions & {
 	key: string;
 	id?: number;
 	layer?: number;
 	title?: string;
 	inTime?: number; // Initial inTime absolute as absolute milliseconds
 	outTime?: number; // Initial outTime as absolute milliseconds
-	validations?: TimelineValidationOptions;
-	layers?: Array<TTimelineLayerOptions>;
+	validations?: TValidationOptions;
+	layers?: Array<TSequenceLayerOptions>;
 };
 
-export interface ITimelineCommon {
+export interface ISequenceCommon {
 	initialize(): void;
 	scale(scaleFactor: number): void;
 	update(): void;
 	validate(): void; // maybe return errors ?
-	getTimeline(): Timeline;
-	getByKey(absoluteKey: string): ITimelineChild | null;
+	getSequence(): Sequence;
+	getByKey(absoluteKey: string): ISequenceChild | null;
 
 	errors: { type: string; message: string }[];
-	layers?: TimelineLayer[];
-	blocks?: TimelineBlock[];
+	layers?: Layer[];
+	blocks?: Block[];
 
 	data?: {
 		[key: string]: unknown;
@@ -66,28 +66,28 @@ export interface ITimelineCommon {
 
 	getMaxDuration?(): number;
 }
-export interface ITimelineChild extends ITimelineCommon {
-	parent: ITimelineCommon;
+export interface ISequenceChild extends ISequenceCommon {
+	parent: ISequenceCommon;
 	getAbsoluteKey(): string;
 }
 
-export type TTimelineChild = TimelineLayer | TimelineBlock;
+export type TSequenceChild = Layer | Block;
 
-export type TTimelineData = TimelineLayer[];
+export type TSequenceData = Layer[];
 
 export type TSelectedHandle = Writable<null | {
 	//layer: undefined | number;
-	block: TimelineBlock;
+	block: Block;
 	cursor: string;
-	handle: TimelineBlockHandleType;
+	handle: BlockHandleType;
 }>;
 
-export interface TimelineContext {
+export interface SequenceContext {
 	time: Writable<number>;
 	width: Writable<number>;
 	duration: Writable<number>;
 	selectedHandle: TSelectedHandle;
 	scrubOverride: Writable<boolean>;
-	timeline: Writable<Timeline>;
+	sequence: Writable<Sequence>;
 	setTime: (value: number) => void;
 }

@@ -1,11 +1,11 @@
 import { writable, derived, type Updater, type Writable } from 'svelte/store';
-import { TimelineLayer } from './TimelineLayer';
-import type { TTimelineLayerOptions, TTimelineOptions, TTimelineChild } from './types';
-import { Timeline } from './Timeline';
-import type { TimelineBlock } from './TimelineBlock';
+import { Layer } from './Layer';
+import type { TSequenceLayerOptions, TSequenceOptions, TSequenceChild } from './types';
+import { Sequence } from './Sequence';
+import type { Block } from './Block';
 
 const DEFAULT_DURATION = 30000;
-const DEFAULT_OPTIONS: Required<TTimelineOptions> = {
+const DEFAULT_OPTIONS: Required<TSequenceOptions> = {
 	validations: {
 		inTime: {},
 		outTime: {},
@@ -18,10 +18,10 @@ const DEFAULT_OPTIONS: Required<TTimelineOptions> = {
 	}
 };
 
-export const deepFlat = (data: TTimelineChild[]) => {
-	return data.reduce<TTimelineChild[]>((acc, item) => {
+export const deepFlat = (data: TSequenceChild[]) => {
+	return data.reduce<TSequenceChild[]>((acc, item) => {
 		acc.push(item);
-		const children = item instanceof TimelineLayer ? item.blocks : item.layers;
+		const children = item instanceof Layer ? item.blocks : item.layers;
 		if (children && children.length > 0) {
 			acc = acc.concat(deepFlat(children));
 		}
@@ -29,14 +29,14 @@ export const deepFlat = (data: TTimelineChild[]) => {
 	}, []);
 };
 
-export const createTimeline = ({
+export const createSequence = ({
 	initialData,
 	duration,
 	options
 }: {
-	initialData: TTimelineLayerOptions[];
+	initialData: TSequenceLayerOptions[];
 	duration?: number; // | Writable<number>
-	options?: TTimelineOptions;
+	options?: TSequenceOptions;
 }) => {
 	options = {
 		...DEFAULT_OPTIONS,
@@ -48,44 +48,44 @@ export const createTimeline = ({
 	const optionsStore = writable(options);
 	const durationStore = writable(duration);
 
-	const timeline = new Timeline(initialData, duration, options);
-	timeline.initialize(); // control when its called?
+	const sequence = new Sequence(initialData, duration, options);
+	sequence.initialize(); // control when its called?
 
-	const timelineStore = writable(timeline);
+	const sequenceStore = writable(sequence);
 
 	durationStore.subscribe((value) => {
-		timeline.setDuration(value);
-		durationStore.set(timeline.getDuration());
-		timelineStore.set(timeline);
+		sequence.setDuration(value);
+		durationStore.set(sequence.getDuration());
+		sequenceStore.set(sequence);
 	});
 
-	const flatKeyStore = derived(timelineStore, ($store) => {
+	const flatKeyStore = derived(sequenceStore, ($store) => {
 		const flat = deepFlat($store.layers);
-		const map = new Map<string, TTimelineChild>();
+		const map = new Map<string, TSequenceChild>();
 
-		flat.map((item: TTimelineChild) => {
+		flat.map((item: TSequenceChild) => {
 			map.set(item.getAbsoluteKey(), item);
 		});
 
 		return map;
 	});
 
-	const getStore = <T extends TTimelineChild>(key: string) => {
-		const c = timeline.getByKey(key) as T;
+	const getStore = <T extends TSequenceChild>(key: string) => {
+		const c = sequence.getByKey(key) as T;
 		if (!c) {
-			//console.warn('no child found for key in timeline', key);
+			//console.warn('no child found for key in sequence', key);
 			return;
 		}
 		const store: Writable<T> = writable(c);
 
 		const set = (value: T) => {
 			store.set(value);
-			timelineStore.set(timeline);
+			sequenceStore.set(sequence);
 		};
 
 		const update = (updater: Updater<T>) => {
 			store.update(updater);
-			timelineStore.set(timeline);
+			sequenceStore.set(sequence);
 		};
 
 		const unsubscribe = flatKeyStore.subscribe((value) => {
@@ -106,12 +106,12 @@ export const createTimeline = ({
 	};
 
 	return {
-		getBlockStore: getStore as typeof getStore<TimelineBlock>,
-		getLayerStore: getStore as typeof getStore<TimelineLayer>,
+		getBlockStore: getStore as typeof getStore<Block>,
+		getLayerStore: getStore as typeof getStore<Layer>,
 		flatKeys: flatKeyStore,
 		options: optionsStore,
 		duration: durationStore,
 		//errors: errorStore,
-		timeline: timelineStore
+		sequence: sequenceStore
 	};
 };
