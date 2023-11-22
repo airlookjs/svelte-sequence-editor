@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/airlookjs/svelte-sequence-editor/compare/v1.0.6...v2.0.0) (2023-11-22)
+
+
+### Chore
+
+* npm version shield ([c242b65](https://github.com/airlookjs/svelte-sequence-editor/commit/c242b65f84479e9508f1556c3089705bae43e0b5))
+
+
+### BREAKING CHANGES
+
+* Timeline has been renamed Sequence, everywhere
+
 ## [1.0.6](https://github.com/airlookjs/svelte-sequence-editor/compare/v1.0.5...v1.0.6) (2023-11-22)
 
 
