@@ -183,7 +183,7 @@
 <main class="p-6">
 	<section class="pb-6">
 		<h2 class="text-2xl">Getting started</h2>
-		<pre>pnpm install -D svelte-sequence-editor</pre>
+		<pre>npm install @airlookjs/svelte-sequence-editor</pre>
 	</section>
 
 	<section class="pb-6">
