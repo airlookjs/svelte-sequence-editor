@@ -10,6 +10,12 @@
 	"keywords": [
 		"svelte",
 		"timeline",
+    "sequence",
+    "broadcast",
+    "UI",
+    "media",
+    "video",
+    "audio",
 		"editor",
 		"form"
 	],
@@ -73,7 +79,7 @@
 		}
 	},
 	"files": [
-		"dist/*"
+		"dist"
 	],
 	"svelte": "./dist/index.js",
 	"typesVersions": {
