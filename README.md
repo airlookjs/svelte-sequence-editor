@@ -18,7 +18,7 @@ $ npm install @airlookjs/svelte-sequence-editor
 ## Usage
 
 ```typescript
-import { createSequence, Block } from '@airlookjs/svelte-sequence-editor';
+import { createSequence, Sequence } from '@airlookjs/svelte-sequence-editor';
 
 const sequenceTemplate = [
     {
@@ -60,7 +60,17 @@ const sequence = createSequence({
 				}
 			}
 		});
+
+const { options, duration } = sequence;
+
 ```
+
+Render the component with the sequence object as a prop.
+
+```html
+<Sequence {options} {duration} {sequence} />    
+```
+
 
 ## Styling with tailwind
 svelte-sequence-editor uses tailwind for styling.
