@@ -6,8 +6,11 @@
 
 UI widget and logic for editing timed sequences in recursively nested structures of layers and blocks. Aimed at simple video and media editing in the browser.
 
-<a href="https://www.npmjs.com/package/@airlookjs/svelte-sequence-editor"><img src="https://img.shields.io/npm/v/@airlookjs/svelte-sequence-editor.svg?style=flat-square&colorB=51C838"
-                                                       alt="NPM Version"></a>
+[![NPM Version](https://img.shields.io/npm/v/@airlookjs/svelte-sequence-editor.svg?style=flat-square&colorB=51C838)](https://www.npmjs.com/package/@airlookjs/svelte-sequence-editor)
+
+[![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
+
+[![CI](https://github.com/airlookjs/svelte-sequence-editor/actions/workflows/ci.yml/badge.svg)](https://github.com/airlookjs/svelte-sequence-editor/actions/workflows/ci.yml)
 
 ## Installation
 
