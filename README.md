@@ -1,7 +1,3 @@
-
-
-
-
 # Svelte Sequence Editor
 
 UI widget and logic for editing timed sequences in recursively nested structures of layers and blocks. Aimed at simple video and media editing in the browser.
@@ -44,7 +40,7 @@ const sequenceTemplate = [
 				inTime: 0,
 				outTime: 10000
             },
-				
+
 		]
 	},
 
@@ -71,9 +67,9 @@ const { options, duration } = sequence;
 Render the component with the sequence object as a prop.
 
 ```html
-<Sequence {options} {duration} {sequence} />    
+<Sequence {options} {duration} {sequence} />
 ```
 
-
 ## Styling with tailwind
+
 svelte-sequence-editor uses tailwind for styling.
