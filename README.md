@@ -16,7 +16,51 @@ $ npm install @airlookjs/svelte-sequence-editor
 ```
 
 ## Usage
-TODO
+
+```typescript
+import { createSequence, Block } from '@airlookjs/svelte-sequence-editor';
+
+const sequenceTemplate = [
+    {
+		key: 'speak',
+		blocks: [
+			{
+				key: 'audio',
+                title: 'Audio',
+				inTime: 0,
+				outTime: 10000
+			}
+		]
+	},
+    {
+		key: 'video',
+		blocks: [
+			{
+				key: 'footage',
+				title: 'Footage',
+				inTime: 0,
+				outTime: 10000
+            },
+				
+		]
+	},
+
+]
+
+const sequence = createSequence({
+			initialData: ,
+			duration: 30000,
+			options: {
+                // Will make the editor snap values to a frame rate of 30 fps
+				roundingBase: () => {
+					return (1 / 30) * 1000
+				},
+			    errorHandler: (error) => {
+					console.error('sequence editor error', error);
+				}
+			}
+		});
+```
 
 ## Styling with tailwind
-TODO
+svelte-sequence-editor uses tailwind for styling.
