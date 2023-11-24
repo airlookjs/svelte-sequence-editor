@@ -9,7 +9,7 @@
 	import { afterUpdate, getContext } from 'svelte';
 	import { uniqueClasses } from '../utils';
 	import { fade } from 'svelte/transition';
-	import type { SequenceContext } from '../shared';
+	import type { SequenceContext } from '../types';
 	import type { Layer } from '../Layer';
 	import type { Block } from '../Block';
 
@@ -77,6 +77,7 @@
 	**/
 
 	export let title: string | undefined = undefined;
+	export let index = 0;
 
 	$: depth = (layer.getAbsoluteKey().split('.').length + 1) / 2;
 </script>
@@ -102,9 +103,9 @@
 		<div
 			class="tl-layer tl-depth-{depth} {depth % 2 == 0
 				? 'tl-depth-even'
-				: 'tl-depth-odd'} {layer.index % 2 == 0
+				: 'tl-depth-odd'} {index % 2 == 0
 				? 'tl-index-even'
-				: 'tl-index-odd'} tl-index-{layer.index}"
+				: 'tl-index-odd'} tl-index-{index}"
 		>
 			{#if blocks?.length > 0}
 				{#each blocks as block (block.key)}

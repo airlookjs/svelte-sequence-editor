@@ -444,21 +444,22 @@ export class Block implements ISequenceChild {
 	}
 
 	public validate() {
-		const errors = [];
+		const errors: { type: string, message: string }[] = [];
+
 		if (this.inTime > this.outTime) {
-			errors.push('inTime can not be above outTime');
+		  errors.push({ type: 'validation', message: 'inTime can not be above outTime' });
 		}
 		if (this.inTime < 0) {
-			errors.push('inTime can not be below 0');
+		  errors.push({ type: 'validation', message: 'inTime can not be below 0' });
 		}
 		if (this.outTime > this.parent.getOutTime()) {
-			errors.push('outTime can not be above parent outTime');
+		  errors.push({ type: 'validation', message: 'outTime can not be above parent outTime' });
 		}
 		if (this.getDuration() < this.getMinDuration()) {
-			errors.push('duration can not be below minDuration');
+		  errors.push({ type: 'validation', message: 'duration can not be below minDuration' });
 		}
 		if (this.getDuration() > this.getMaxDuration()) {
-			errors.push('duration can not be above maxDuration');
+		  errors.push({ type: 'validation', message: 'duration can not be above maxDuration' });
 		}
 
 		this.layers.forEach((layer) => {

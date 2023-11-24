@@ -10,6 +10,9 @@ export class Sequence implements ISequenceCommon {
 	duration: number;
 	layers: Layer[];
 	options: TSequenceOptions;
+	
+	errors: { type: string; message: string }[] = [];
+
 
 	constructor(layers: TSequenceLayerOptions[], duration: number, options: TSequenceOptions) {
 		this.duration = duration;
