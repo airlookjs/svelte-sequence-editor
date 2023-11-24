@@ -2,7 +2,7 @@
 </script>
 
 <script lang="ts">
-	import Block from '../components/Block.svelte';
+	import SequenceBlock from '../components/Block.svelte';
 	//import { flip } from 'svelte/animate';
 	//import type { FlipParams } from 'svelte/animate';
 	import { key } from './key';
@@ -11,7 +11,7 @@
 	import { fade } from 'svelte/transition';
 	import type { SequenceContext } from '../shared';
 	import type { Layer } from '../Layer';
-	import type { Block } from '$lib/Block';
+	import type { Block } from '../Block';
 
 	//export let animate: FlipParams = {};
 	const { width, duration }: SequenceContext = getContext(key);
@@ -109,7 +109,7 @@
 			{#if blocks?.length > 0}
 				{#each blocks as block (block.key)}
 					<slot {block} name="blocks">
-						<Block {disabled} {block} />
+						<SequenceBlock {disabled} {block} />
 					</slot>
 				{/each}
 			{:else}
