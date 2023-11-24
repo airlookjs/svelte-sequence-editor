@@ -1,3 +1,12 @@
+## [2.0.1](https://github.com/airlookjs/svelte-sequence-editor/compare/v2.0.0...v2.0.1) (2023-11-24)
+
+
+### Bug Fixes
+
+* duplicate code to check for errorHandler ([8593c1e](https://github.com/airlookjs/svelte-sequence-editor/commit/8593c1e8e7ff0f7315e6d10a7d791b833c233b03))
+* multiple type errors and more ([10ab84c](https://github.com/airlookjs/svelte-sequence-editor/commit/10ab84c6ad06f2f84fc0ed3c01dcfef3f355e532))
+* wrong name for import ([427c6c9](https://github.com/airlookjs/svelte-sequence-editor/commit/427c6c9989ecf6f4bf2ebe9964567b02d231411f))
+
 # [2.0.0](https://github.com/airlookjs/svelte-sequence-editor/compare/v1.0.6...v2.0.0) (2023-11-22)
 
 ### Chore
