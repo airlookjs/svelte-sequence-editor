@@ -52,7 +52,7 @@ export interface ISequenceCommon {
 	initialize(): void;
 	scale(scaleFactor: number): void;
 	update(): void;
-	validate(): void; 
+	validate(): void;
 	getSequence(): Sequence;
 	getByKey(absoluteKey: string): ISequenceChild | null;
 

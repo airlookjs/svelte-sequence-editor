@@ -71,7 +71,6 @@
 	$: layers = $sequenceData.layers.sort((a, b) => {
 		return a.sortIndex - b.sortIndex;
 	});
-
 </script>
 
 <!-- Could likely be implemented more elegantly pending popular feature request in svelte, but it works like this -->

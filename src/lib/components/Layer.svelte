@@ -101,9 +101,9 @@
 		<!--<div class="absolute" style="left: {layerLeft}px; right: {layerRight}px;">
     	</div>-->
 		<div
-			class="tl-layer tl-depth-{depth} {depth % 2 == 0
-				? 'tl-depth-even'
-				: 'tl-depth-odd'} {index % 2 == 0
+			class="tl-layer tl-depth-{depth} {depth % 2 == 0 ? 'tl-depth-even' : 'tl-depth-odd'} {index %
+				2 ==
+			0
 				? 'tl-index-even'
 				: 'tl-index-odd'} tl-index-{index}"
 		>

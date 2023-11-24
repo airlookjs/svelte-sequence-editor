@@ -175,7 +175,6 @@
 
 	$: footageblock = getBlockStore('video.footage')!;
 
-
 	const videoInChangeHandler = (e: Event) => {
 		$footageblock.absoluteInTime = (e.target as HTMLInputElement).valueAsNumber;
 	};
@@ -183,32 +182,28 @@
 	const durationChangeHandler = (e: Event) => {
 		$duration = (e.target as HTMLInputElement).valueAsNumber;
 	};
-
 </script>
 
+<section class="pb-6">
+	<h2 class="text-2xl">Example</h2>
 
+	<h3>Bind data from a form to the sequence editor</h3>
 
-	<section class="pb-6">
-		<h2 class="text-2xl">Example</h2>
+	<label for="duration">Duration</label>
+	<input
+		name="duration"
+		id="duration"
+		type="number"
+		value={$duration}
+		on:change={durationChangeHandler}
+	/>
 
-		<h3>Bind data from a form to the sequence editor</h3>
+	<input
+		type="number"
+		name="videoin"
+		value={$footageblock.absoluteInTime}
+		on:change={videoInChangeHandler}
+	/>
 
-		<label for="duration">Duration</label>
-		<input
-			name="duration"
-			id="duration"
-			type="number"
-			value={$duration}
-			on:change={durationChangeHandler}
-		/>
-
-		<input
-			type="number"
-			name="videoin"
-			value={$footageblock.absoluteInTime}
-			on:change={videoInChangeHandler}
-		/>
-
-		<Sequence {options} {duration} {sequence} bind:this={sequenceComponent} />
-	</section>
-
+	<Sequence {options} {duration} {sequence} bind:this={sequenceComponent} />
+</section>
