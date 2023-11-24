@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
-	import type { SequenceContext } from '../shared';
+	import type { SequenceContext } from '../types';
 	import { key } from './key';
 	import { uniqueClasses } from '../utils';
 

@@ -15,7 +15,11 @@ const DEFAULT_OPTIONS: Required<TSequenceOptions> = {
 	},
 	roundingBase: () => {
 		return 1;
+	},
+	errorHandler: (error) => {
+		console.error(error);
 	}
+	
 };
 
 export const deepFlat = (data: TSequenceChild[]) => {
@@ -111,7 +115,6 @@ export const createSequence = ({
 		flatKeys: flatKeyStore,
 		options: optionsStore,
 		duration: durationStore,
-		//errors: errorStore,
 		sequence: sequenceStore
 	};
 };

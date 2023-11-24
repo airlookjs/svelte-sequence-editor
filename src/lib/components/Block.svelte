@@ -10,7 +10,7 @@
 	import BlockHandle from '../components/BlockHandle.svelte';
 
 	import type { Block } from '../Block';
-	import type { SequenceContext } from '../shared';
+	import type { SequenceContext } from '../types';
 
 	const { duration, width, selectedHandle, sequence, time, scrubOverride }: SequenceContext =
 		getContext(key);

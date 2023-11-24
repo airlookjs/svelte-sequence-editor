@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { uniqueClasses } from '../utils';
 	import { getContext } from 'svelte';
-	import type { SequenceContext } from '../shared';
+	import type { SequenceContext } from '../types';
 	import { key } from './key';
 
 	const { duration, width }: SequenceContext = getContext(key);

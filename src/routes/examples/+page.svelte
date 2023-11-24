@@ -174,9 +174,17 @@
 	//		<number input="number" name="videoin" bind:value={sequence.getBlockByKey('video.footage')} />
 
 	$: footageblock = getBlockStore('video.footage')!;
+
+
+	const videoInChangeHandler = (e: Event) => {
+		$footageblock.absoluteInTime = (e.target as HTMLInputElement).valueAsNumber;
+	};
+
+	const durationChangeHandler = (e: Event) => {
+		$duration = (e.target as HTMLInputElement).valueAsNumber;
+	};
+
 </script>
-
-
 
 
 
@@ -191,18 +199,14 @@
 			id="duration"
 			type="number"
 			value={$duration}
-			on:change={(e) => {
-				$duration = e.target.value;
-			}}
+			on:change={durationChangeHandler}
 		/>
 
 		<input
 			type="number"
 			name="videoin"
 			value={$footageblock.absoluteInTime}
-			on:change={(e) => {
-				$footageblock.absoluteInTime = e.target.value;
-			}}
+			on:change={videoInChangeHandler}
 		/>
 
 		<Sequence {options} {duration} {sequence} bind:this={sequenceComponent} />

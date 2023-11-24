@@ -67,6 +67,11 @@
 	};
 
 	$: gridBackground = getGridBackground($duration);
+
+	$: layers = $sequenceData.layers.sort((a, b) => {
+		return a.sortIndex - b.sortIndex;
+	});
+
 </script>
 
 <!-- Could likely be implemented more elegantly pending popular feature request in svelte, but it works like this -->
@@ -94,9 +99,9 @@
 	<slot {currentTime} setTime={context.setTime} layers={$sequenceData.layers}>
 		<Timebar />
 
-		{#if $sequenceData.layers}
-			{#each $sequenceData.layers as layer (layer.key)}
-				<Layer disabled={$disabled} data={layer} />
+		{#if layers}
+			{#each layers as layer, index (layer.key)}
+				<Layer disabled={$disabled} data={layer} {index} />
 			{/each}
 		{/if}
 	</slot>
