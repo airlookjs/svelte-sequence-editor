@@ -8,21 +8,11 @@
 	});
 
 	const { options, duration } = sequence;
-
-
 </script>
 
 <section class="pb-6">
 	<h2 class="text-2xl">Example custom SVG rendering</h2>
-	<Sequence
-		tag="svg"
-		width="100%"
-		height="100%"
-		{sequence}
-		{options}
-		{duration}
-		let:layers
-	>
+	<Sequence tag="svg" width="100%" height="100%" {sequence} {options} {duration} let:layers>
 		{#if layers}
 			{#each layers as layer (layer.key)}
 				<SequenceLayer tag="g" data={layer}>

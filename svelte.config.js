@@ -5,9 +5,11 @@ import { vitePreprocess } from '@sveltejs/kit/vite';
 const config = {
 	// Consult https://github.com/sveltejs/svelte-preprocess
 	// for more information about preprocessors
-	preprocess: [vitePreprocess({
-		postcss: true
-	})],
+	preprocess: [
+		vitePreprocess({
+			postcss: true
+		})
+	],
 	kit: {
 		adapter: adapter({
 			pages: 'build',
@@ -18,7 +20,7 @@ const config = {
 		}),
 		paths: {
 			base: process.argv.includes('dev') ? '' : process.env.BASE_PATH
-        }
+		}
 	}
 };
 

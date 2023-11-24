@@ -19,7 +19,6 @@ const DEFAULT_OPTIONS: Required<TSequenceOptions> = {
 	errorHandler: (error) => {
 		console.error(error);
 	}
-	
 };
 
 export const deepFlat = (data: TSequenceChild[]) => {
