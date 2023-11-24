@@ -1,6 +1,15 @@
 <script lang="ts">
-	import { Sequence, SequenceLayer, SequenceTimebar, SequenceBlock } from '$lib';
+	import { Sequence, SequenceLayer, SequenceTimebar, SequenceBlock, createSequence } from '$lib';
 	import { sampleData2 } from '../data';
+
+	const sequence = createSequence({
+		duration: sampleData2.duration,
+		initialData: sampleData2.layers
+	});
+
+	const { options, duration } = sequence;
+
+
 </script>
 
 <section class="pb-6">
@@ -9,18 +18,19 @@
 		tag="svg"
 		width="100%"
 		height="100%"
-		options={{ duration: sampleData2.duration }}
-		initialData={sampleData2.layers}
+		{sequence}
+		{options}
+		{duration}
 		let:layers
 	>
 		{#if layers}
 			{#each layers as layer (layer.key)}
-				<SequenceLayer tag="g" data={layer} let:block>
+				<SequenceLayer tag="g" data={layer}>
 					<text slot="header">
 						custom header for {layer.key}
 					</text>
 
-					<SequenceBlock {block} slot="blocks" tag="g">
+					<SequenceBlock {block} let:block slot="blocks" tag="g">
 						<rect height="100%" width="10%" fill={'#333'} />
 						<text>Custom block</text>
 					</SequenceBlock>
