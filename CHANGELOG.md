@@ -1,9 +1,8 @@
 ## [2.0.2](https://github.com/airlookjs/svelte-sequence-editor/compare/v2.0.1...v2.0.2) (2023-11-24)
 
-
 ### Bug Fixes
 
-* base link ([e6d8568](https://github.com/airlookjs/svelte-sequence-editor/commit/e6d8568fd73a5960e01ac3c233570b96a93b37b8))
+- base link ([e6d8568](https://github.com/airlookjs/svelte-sequence-editor/commit/e6d8568fd73a5960e01ac3c233570b96a93b37b8))
 
 ## [2.0.1](https://github.com/airlookjs/svelte-sequence-editor/compare/v2.0.0...v2.0.1) (2023-11-24)
 
