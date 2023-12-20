@@ -120,31 +120,26 @@
 				type: 'media',
 				inTime: 0,
 				outTime: 10000,
-				_TLKey: 'video.footage'
 			},
 			{
 				type: 'promoter',
 				inTime: 0,
 				outTime: 10000,
-				_TLKey: 'promoters.promoter1'
 			},
 			{
 				type: 'promoter',
 				inTime: 1000,
 				outTime: 4000,
-				_TLKey: 'promoters.promoter2'
 			},
 			{
 				type: 'promoter',
 				inTime: 1000,
 				outTime: 4000,
-				_TLKey: 'promoters.promoter3'
 			},
 			{
 				type: 'promoter',
 				inTime: 1000,
 				outTime: 4000,
-				_TLKey: 'promoters.promoter4'
 			}
 		]
 	};
