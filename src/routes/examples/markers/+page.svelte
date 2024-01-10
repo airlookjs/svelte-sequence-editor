@@ -214,10 +214,5 @@
 			<CustomLayer data={layer} {index} />
 		</svelte:fragment>
 
-		<!--
-							TODO: add sequence markers on its own speacial layer fronm a context that has times of scene changes from the primary video used in the template
-							testing in svelte-sequence-editor first then integrating here
-							<SequenceMarkers/>
-						-->
 	</Sequence>
 </section>
