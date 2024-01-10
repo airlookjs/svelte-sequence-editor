@@ -245,7 +245,7 @@
 						...markers.map((m) => m.time + block.absoluteInTime)
 					];
 				}
-				console.log($snapTimes);
+				//console.log($snapTimes);
 			}}
 			class="tl-block"
 			style="margin-left: {blockLeft - offsetLeft}px; width: {blockWidth}px;"
