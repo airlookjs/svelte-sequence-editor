@@ -46,6 +46,7 @@ export type TSequenceBlockOptions = ISequenceCommonOptions & {
 	outTime?: number; // Initial outTime as absolute milliseconds
 	validations?: TValidationOptions;
 	layers?: Array<TSequenceLayerOptions>;
+	markers?: Array<{ time: number; label: string }>;
 };
 
 export interface ISequenceCommon {
@@ -87,6 +88,7 @@ export interface SequenceContext {
 	width: Writable<number>;
 	duration: Writable<number>;
 	selectedHandle: TSelectedHandle;
+	snapTimes: Writable<number[]>;
 	scrubOverride: Writable<boolean>;
 	sequence: Writable<Sequence>;
 	setTime: (value: number) => void;

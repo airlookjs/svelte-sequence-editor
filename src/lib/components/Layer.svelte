@@ -1,3 +1,5 @@
+<!-- @component `SequenceLayer` must be descendent of `Sequence`. -->
+
 <script context="module" lang="ts">
 </script>
 
@@ -18,6 +20,7 @@
 	let layerEl: HTMLElement | null;
 
 	export let data: Layer;
+	export let index: number;
 
 	export let disabled = false;
 
@@ -77,7 +80,6 @@
 	**/
 
 	export let title: string | undefined = undefined;
-	export let index = 0;
 
 	$: depth = (layer.getAbsoluteKey().split('.').length + 1) / 2;
 </script>
@@ -108,11 +110,15 @@
 				: 'tl-index-odd'} tl-index-{index}"
 		>
 			{#if blocks?.length > 0}
-				{#each blocks as block (block.key)}
-					<slot {block} name="blocks">
-						<SequenceBlock {disabled} {block} />
-					</slot>
-				{/each}
+				<slot name="blocks">
+					{#each blocks as block (block.key)}
+						<slot {block} name="block">
+							<SequenceBlock {disabled} {block}>
+								<svelte:self data={layer} {index} slot="layer" let:layer let:index class="" />
+							</SequenceBlock>
+						</slot>
+					{/each}
+				</slot>
 			{:else}
 				<slot name="empty">
 					<em>empty layer</em>
@@ -122,7 +128,6 @@
 	</slot>
 </svelte:element>
 
-<!-- @component `SequenceLayer` must be descendent of `Sequence`. -->
 <style lang="postcss">
 	.tl-layer-container {
 		@apply block relative;

@@ -13,21 +13,21 @@
 
 	const sequenceData = sequence.sequence;
 	const duration = sequence.duration;
-
 	let currentWidth: null | number = null;
 
 	const time = writable(currentTime ?? -1);
 	const width = writable(currentWidth ?? 30000);
-
 	const selectedHandle: TSelectedHandle = writable(null);
 	const scrubOverride = writable(false);
 	const disabled = writable(false);
+	const snapTimes = writable([]);
 
 	const context: SequenceContext = {
 		time,
 		duration,
 		sequence: sequenceData,
 		width,
+		snapTimes,
 		selectedHandle,
 		scrubOverride,
 		setTime: (_value) => time.set(_value)
@@ -96,13 +96,19 @@
 	{...$$restProps}
 >
 	<slot {currentTime} setTime={context.setTime} layers={$sequenceData.layers}>
-		<Timebar />
+		<slot name="timebar">
+			<Timebar />
+		</slot>
 
-		{#if layers}
-			{#each layers as layer, index (layer.key)}
-				<Layer disabled={$disabled} data={layer} {index} />
-			{/each}
-		{/if}
+		<slot name="layers" {layers}>
+			{#if layers}
+				{#each layers as layer, index (layer.key)}
+					<slot name="layer" {layer} {index}>
+						<Layer disabled={$disabled} data={layer} {index} />
+					</slot>
+				{/each}
+			{/if}
+		</slot>
 	</slot>
 </svelte:element>
 

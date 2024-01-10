@@ -1,5 +1,8 @@
 <script lang="ts">
-	import { Sequence } from '$lib';
+	import { Sequence, SequenceTimebar } from '$lib';
+	import { createSequence } from '$lib/createSequence';
+	import { writable } from 'svelte/store';
+	import CustomLayer from './CustomLayer.svelte';
 
 	const PromoterBlockTemplate = {
 		key: 'promoter',
@@ -16,25 +19,57 @@
 	const template = {
 		layers: [
 			{
-				key: 'speak',
-				blocks: [
-					// defaultblocks
-					{
-						key: 'audio',
-						inTime: 0,
-						outTime: 10000
-					}
-				]
-			},
-			{
 				key: 'video',
+				sortIndex: 2,
 				blocks: [
 					// defaultblocks
 					{
 						key: 'footage',
-						title: 'very long footage title to make this block largerrrr',
+						title: 'footage with scene markers',
 						inTime: 0,
-						outTime: 10000
+						outTime: 10000,
+						markers: [
+							{
+								time: 1000,
+								label: 'scene 1'
+							},
+							{
+								time: 1050,
+								label: 'scene 2'
+							},
+							{
+								time: 300,
+								label: 'scene 3'
+							},
+							{
+								time: 4000,
+								label: 'scene 4'
+							},
+							{
+								time: 5000,
+								label: 'scene 5'
+							},
+							{
+								time: 6000,
+								label: 'scene 6'
+							},
+							{
+								time: 7000,
+								label: 'scene 7'
+							},
+							{
+								time: 8000,
+								label: 'scene 8'
+							},
+							{
+								time: 9000,
+								label: 'scene 9'
+							},
+							{
+								time: 10000,
+								label: 'scene 10'
+							}
+						]
 					}
 				]
 			},
@@ -44,7 +79,7 @@
 					// defaultblocks
 					{
 						...PromoterBlockTemplate,
-						key: 'promoter1',
+						key: 'title',
 						layers: [
 							{
 								key: 'layer1',
@@ -54,7 +89,7 @@
 										key: 'block1'
 									},
 									{
-										key: 'block2 lorem ipsum dolor sit amet asdjgfnæojrgo ojdsfog hosdfhg sdfogj ofdg',
+										key: 'block2',
 										layers: [
 											{
 												key: 'layer1',
@@ -85,27 +120,6 @@
 								]
 							}
 						]
-					},
-					{
-						...PromoterBlockTemplate,
-						key: 'promoter2',
-						title: 'very long title for this block'
-					},
-					{
-						...PromoterBlockTemplate,
-						key: 'promoter3'
-					},
-					{
-						...PromoterBlockTemplate,
-						key: 'promoter4'
-					}
-				]
-			},
-			{
-				key: 'video2',
-				blocks: [
-					{
-						key: 'block'
 					}
 				]
 			}
@@ -144,7 +158,7 @@
 		]
 	};
 
-	import { createSequence } from '$lib/createSequence';
+	let time = writable(0);
 
 	const sequence = createSequence({
 		initialData: template.layers,
@@ -152,21 +166,6 @@
 	});
 
 	const { options, duration, getBlockStore } = sequence;
-
-	let sequenceComponent;
-
-	/*const newLook = {
-		duration: $duration,
-		components: [
-			{
-				type: 'media',
-				inTime: 0,
-				outTime: 10000
-			}
-		]
-	};*/
-
-	//		<number input="number" name="videoin" bind:value={sequence.getBlockByKey('video.footage')} />
 
 	$: footageblock = getBlockStore('video.footage')!;
 
@@ -180,7 +179,7 @@
 </script>
 
 <section class="pb-6">
-	<h2 class="text-2xl">Example</h2>
+	<h2 class="text-2xl">Scene Detection Markers with snapping</h2>
 
 	<h3>Bind data from a form to the sequence editor</h3>
 
@@ -200,5 +199,25 @@
 		on:change={videoInChangeHandler}
 	/>
 
-	<Sequence {options} {duration} {sequence} bind:this={sequenceComponent} />
+	<h3>Default rendering</h3>
+	<Sequence {options} {duration} {sequence} />
+
+	<h3>Custom rendering</h3>
+	<Sequence
+		{sequence}
+		bind:currentTime={$time}
+		class="mb-4 w-full dark:border-gray-700 dark:bg-gray-800"
+	>
+		<SequenceTimebar slot="timebar" formatTimeFn={(value) => `${value}`} class="dark:bg-gray-900" />
+
+		<svelte:fragment slot="layer" let:layer let:index>
+			<CustomLayer data={layer} {index} />
+		</svelte:fragment>
+
+		<!--
+							TODO: add sequence markers on its own speacial layer fronm a context that has times of scene changes from the primary video used in the template
+							testing in svelte-sequence-editor first then integrating here
+							<SequenceMarkers/>
+						-->
+	</Sequence>
 </section>
