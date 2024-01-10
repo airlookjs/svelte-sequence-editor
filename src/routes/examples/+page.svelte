@@ -119,27 +119,27 @@
 			{
 				type: 'media',
 				inTime: 0,
-				outTime: 10000,
+				outTime: 10000
 			},
 			{
 				type: 'promoter',
 				inTime: 0,
-				outTime: 10000,
+				outTime: 10000
 			},
 			{
 				type: 'promoter',
 				inTime: 1000,
-				outTime: 4000,
+				outTime: 4000
 			},
 			{
 				type: 'promoter',
 				inTime: 1000,
-				outTime: 4000,
+				outTime: 4000
 			},
 			{
 				type: 'promoter',
 				inTime: 1000,
-				outTime: 4000,
+				outTime: 4000
 			}
 		]
 	};

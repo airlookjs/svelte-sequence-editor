@@ -26,7 +26,7 @@ export class Block implements ISequenceChild {
 	data?: {
 		[key: string]: unknown;
 	};
-	markers: {time: number, label: string}[] = [];
+	markers: { time: number; label: string }[] = [];
 	errors: { type: string; message: string }[] = [];
 
 	private _inTime?: number;
@@ -194,12 +194,18 @@ export class Block implements ISequenceChild {
 		this.setOutTime(this._outTime as number);
 	}
 
-	public setInTime(value: number, options: { maintainDuration?: boolean; snap?: boolean, snapTimes?: number[] } = {}) {
+	public setInTime(
+		value: number,
+		options: { maintainDuration?: boolean; snap?: boolean; snapTimes?: number[] } = {}
+	) {
 		const res = this.setTimeCommon(value, tHandles.inTime, options);
 		return res.apply();
 	}
 
-	public setOutTime(value: number, options: { maintainDuration?: boolean; snap?: boolean, snapTimes?: number[] } = {}) {
+	public setOutTime(
+		value: number,
+		options: { maintainDuration?: boolean; snap?: boolean; snapTimes?: number[] } = {}
+	) {
 		const res = this.setTimeCommon(value, tHandles.outTime, options);
 		return res.apply();
 	}
@@ -217,7 +223,7 @@ export class Block implements ISequenceChild {
 	protected setTimeCommon(
 		inputValue: number,
 		prop: tHandles,
-		options: { maintainDuration?: boolean; snap?: boolean, snapTimes?: number[] } = { },
+		options: { maintainDuration?: boolean; snap?: boolean; snapTimes?: number[] } = {},
 		depth = 0
 	) {
 		depth++;
@@ -274,17 +280,20 @@ export class Block implements ISequenceChild {
 		// TODO: parse in value bases on ui pixels
 		const snapTimeThreshold = 150;
 
-		if(options.snapTimes) {
-			const snaps = options.snapTimes.map((snapTime) => {
-				// make relative
-				return snapTime - this.parent.getAbsoluteInTime();
-			}).filter((snapTime) => {
-				return Math.abs(setT - snapTime) < snapTimeThreshold;
-			}).sort((a, b) => {
-				return Math.abs(setT - a) - Math.abs(setT - b);
-			});
-			const snap = snaps[0]
-			if(snap) {
+		if (options.snapTimes) {
+			const snaps = options.snapTimes
+				.map((snapTime) => {
+					// make relative
+					return snapTime - this.parent.getAbsoluteInTime();
+				})
+				.filter((snapTime) => {
+					return Math.abs(setT - snapTime) < snapTimeThreshold;
+				})
+				.sort((a, b) => {
+					return Math.abs(setT - a) - Math.abs(setT - b);
+				});
+			const snap = snaps[0];
+			if (snap) {
 				setT = snap;
 			}
 		}
@@ -452,7 +461,7 @@ export class Block implements ISequenceChild {
 		return set(setT);
 	}
 
-	public move(delta: number, options: { snap?: boolean, snapTimes?: number[] } = {}) {
+	public move(delta: number, options: { snap?: boolean; snapTimes?: number[] } = {}) {
 		if (delta == 0) return;
 
 		const res = this.setTimeCommon(

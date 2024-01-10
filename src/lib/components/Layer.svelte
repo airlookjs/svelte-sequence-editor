@@ -111,13 +111,13 @@
 		>
 			{#if blocks?.length > 0}
 				<slot name="blocks">
-				{#each blocks as block (block.key)}
-					<slot {block} name="block">
-						<SequenceBlock {disabled} {block} >
-							<svelte:self data={layer} {index} slot="layer" let:layer let:index class=""/>
-						</SequenceBlock>
-					</slot>
-				{/each}
+					{#each blocks as block (block.key)}
+						<slot {block} name="block">
+							<SequenceBlock {disabled} {block}>
+								<svelte:self data={layer} {index} slot="layer" let:layer let:index class="" />
+							</SequenceBlock>
+						</slot>
+					{/each}
 				</slot>
 			{:else}
 				<slot name="empty">

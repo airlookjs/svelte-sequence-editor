@@ -95,21 +95,20 @@
 	style={gridBackground}
 	{...$$restProps}
 >
-	<slot {currentTime} setTime={context.setTime} layers={$sequenceData.layers} >
+	<slot {currentTime} setTime={context.setTime} layers={$sequenceData.layers}>
 		<slot name="timebar">
 			<Timebar />
 		</slot>
 
 		<slot name="layers" {layers}>
-		{#if layers}
-		{#each layers as layer, index (layer.key)}
-			<slot name="layer" {layer} {index} >
-				<Layer disabled={$disabled} data={layer} {index} />
-			</slot>
-		{/each}
-		{/if}
+			{#if layers}
+				{#each layers as layer, index (layer.key)}
+					<slot name="layer" {layer} {index}>
+						<Layer disabled={$disabled} data={layer} {index} />
+					</slot>
+				{/each}
+			{/if}
 		</slot>
-
 	</slot>
 </svelte:element>
 

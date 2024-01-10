@@ -23,8 +23,8 @@
 	style={disabled
 		? 'cursor: not-allowed'
 		: typeof fixed == 'number'
-		  ? 'cursor: default'
-		  : 'cursor: ew-resize'}
+			? 'cursor: default'
+			: 'cursor: ew-resize'}
 	on:pointerdown
 	on:mouseover
 	on:focus

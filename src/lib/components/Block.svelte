@@ -15,15 +15,21 @@
 	import type { Block } from '../Block';
 	import type { SequenceContext } from '../types';
 
-	const { duration, width, selectedHandle, sequence, time, scrubOverride, snapTimes }: SequenceContext =
-		getContext(key);
+	const {
+		duration,
+		width,
+		selectedHandle,
+		sequence,
+		time,
+		scrubOverride,
+		snapTimes
+	}: SequenceContext = getContext(key);
 
 	export let block: Block;
 	let blockEl: HTMLElement | null;
 	type BlockHandleType = 'inTime' | 'outTime' | 'block';
 
 	const selectHandle = (type: BlockHandleType) => {
-
 		$snapTimes = [];
 
 		snap = true;
@@ -101,7 +107,6 @@
 				return;
 			}
 
-
 			//console.log(deltaTime)
 			if ((deltaTime < 0 && lastDeltaTime > 0) || (deltaTime > 0 && lastDeltaTime < 0)) {
 				//console.log("change direction")
@@ -121,15 +126,13 @@
 			}
 
 			// if user has cursor over a marker or handle on another block then snap to its time if within a certain threshold
-			
 
 			let res;
 
 			if (handle == 'block') {
-				res = block.move(accDeltaTime, { snap: snap, snapTimes:$snapTimes });
+				res = block.move(accDeltaTime, { snap: snap, snapTimes: $snapTimes });
 				time.set(block.absoluteInTime);
 			} else if (handle == 'inTime') {
-
 				/*const snapInDelta = $snapValue && $snapValue - (block.inTime + accDeltaTime);
 				if(snapInDelta && Math.abs(snapInDelta) < snapThreshold) {
 					console.log("snap to marker for in")
@@ -141,13 +144,13 @@
 					accDeltaTime = 0;
 					//snap = true;
 				} else {*/
-	
-					res = block.setInTime(block.inTime + accDeltaTime, { snap: snap, snapTimes:$snapTimes });
+
+				res = block.setInTime(block.inTime + accDeltaTime, { snap: snap, snapTimes: $snapTimes });
 				//}
 
 				time.set(block.absoluteInTime);
 			} else if (handle == 'outTime') {
-				res = block.setOutTime(block.outTime + accDeltaTime, { snap: snap, snapTimes:$snapTimes });
+				res = block.setOutTime(block.outTime + accDeltaTime, { snap: snap, snapTimes: $snapTimes });
 				time.set(block.absoluteOutTime);
 			}
 
@@ -191,13 +194,13 @@
 	$: cursorClass = disabled
 		? 'cursor: not-allowed'
 		: moveable && !noHandles
-		  ? 'cursor: grab'
-		  : 'cursor: default';
+			? 'cursor: grab'
+			: 'cursor: default';
 	const bgColor = 'bg-amber-200';
 
 	let blockLeft: number, blockRight: number, blockWidth: number, timeToPixel: number;
 	$: {
-		blockLeft =  (block.inTime / $duration) * $width;
+		blockLeft = (block.inTime / $duration) * $width;
 		blockRight = $width - (block.outTime / $duration) * $width;
 		blockWidth = $width - (blockRight + blockLeft);
 		timeToPixel = (1 / $duration) * $width;
@@ -209,8 +212,6 @@
 	$: offsetLeft = blockEl?.offsetLeft || 0;
 	$: title = block.title || block.key;
 
-	
-
 	// TODO: replace all div with svelte:element to allow for svg rendering
 </script>
 
@@ -220,7 +221,6 @@
 	on:keydown={handleKeyDown}
 	on:keyup={handleKeyUp}
 />
-
 
 <!-- todo add aria stuff and remove next line-->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -233,25 +233,25 @@
 	{...$$restProps}
 >
 	<slot {noHandles} {disabled} {blockLeft} {blockRight} {blockWidth} {block}>
-		<div 
-		
+		<div
 			on:mouseenter={() => {
-				if(!$selectedHandle || $selectedHandle.block.getAbsoluteKey() != block.getAbsoluteKey()) {
-					$snapTimes = [block.absoluteInTime, block.absoluteOutTime, ...block.markers.map(m => m.time+block.absoluteInTime)];
+				if (!$selectedHandle || $selectedHandle.block.getAbsoluteKey() != block.getAbsoluteKey()) {
+					$snapTimes = [
+						block.absoluteInTime,
+						block.absoluteOutTime,
+						...block.markers.map((m) => m.time + block.absoluteInTime)
+					];
 				}
-				console.log($snapTimes)
+				console.log($snapTimes);
 			}}
-
-			class="tl-block" style="margin-left: {blockLeft - offsetLeft}px; width: {blockWidth}px;">
-
+			class="tl-block"
+			style="margin-left: {blockLeft - offsetLeft}px; width: {blockWidth}px;"
+		>
 			<div
 				class="tl-block-main {bgColor} {handle
 					? `tl-selected tl-active-handle-${handle.toLowerCase()}`
 					: ''}"
 			>
-
-
-
 				<div class="tl-block-left">
 					<slot {noHandles} {disabled} name="inHandle">
 						{#if !noHandles}
@@ -316,39 +316,32 @@
 			</div>
 
 			<slot markers={block.markers} name="markers">
-
 				{#if block.markers && block.markers.length > 0}
-			<div class="tl-block-markers relative overflow-hidden h-4">
-				{#each block.markers as marker, index}
-
-				<div
-					class="tl-block-marker-wrapper absolute"
-					style="left: {marker.time * timeToPixel}px; top: 1px;"
-				>
-					<BlockMarker time={marker.time+block.absoluteInTime} {index}>
-					</BlockMarker>
-				</div>
-				{/each}
-			</div>
-		{/if}
-
-
+					<div class="tl-block-markers relative overflow-hidden h-4">
+						{#each block.markers as marker, index}
+							<div
+								class="tl-block-marker-wrapper absolute"
+								style="left: {marker.time * timeToPixel}px; top: 1px;"
+							>
+								<BlockMarker time={marker.time + block.absoluteInTime} {index}></BlockMarker>
+							</div>
+						{/each}
+					</div>
+				{/if}
 			</slot>
 
-			
 			{#if block.layers.length > 0}
 				<div class="tl-block-children">
 					<slot layers={block.layers} name="layers">
 						{#each block.layers as layer, index (layer.key)}
-						<slot {layer} {index} name="layer">
-							<!-- default sublayer rendering -->
-							<Layer {disabled} data={layer} {index} class="" />
-						</slot>
+							<slot {layer} {index} name="layer">
+								<!-- default sublayer rendering -->
+								<Layer {disabled} data={layer} {index} class="" />
+							</slot>
 						{/each}
 					</slot>
 				</div>
 			{/if}
-			
 		</div>
 	</slot>
 </svelte:element>
