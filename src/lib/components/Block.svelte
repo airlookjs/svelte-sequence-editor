@@ -26,6 +26,10 @@
 	}: SequenceContext = getContext(key);
 
 	export let block: Block;
+	export let markers = block.markers ?? [];
+
+
+
 	let blockEl: HTMLElement | null;
 	type BlockHandleType = 'inTime' | 'outTime' | 'block';
 
@@ -181,7 +185,6 @@
 	};
 
 	//const timeToPixel = (t: number) => (t / $duration) * $width;
-
 	//$: console.log(accDeltaTime);
 
 	export let tag = 'div';
@@ -239,7 +242,7 @@
 					$snapTimes = [
 						block.absoluteInTime,
 						block.absoluteOutTime,
-						...block.markers.map((m) => m.time + block.absoluteInTime)
+						...markers.map((m) => m.time + block.absoluteInTime)
 					];
 				}
 				console.log($snapTimes);
@@ -315,10 +318,10 @@
 				</div>
 			</div>
 
-			<slot markers={block.markers} name="markers">
-				{#if block.markers && block.markers.length > 0}
+			<slot {markers} name="markers">
+				{#if markers.length > 0}
 					<div class="tl-block-markers relative overflow-hidden h-4">
-						{#each block.markers as marker, index}
+						{#each markers as marker, index}
 							<div
 								class="tl-block-marker-wrapper absolute"
 								style="left: {marker.time * timeToPixel}px; top: 1px;"
