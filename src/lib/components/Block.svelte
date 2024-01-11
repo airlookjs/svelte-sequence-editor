@@ -247,7 +247,7 @@
 				}
 				//console.log($snapTimes);
 			}}
-			class="tl-block"
+			class="tl-block relative"
 			style="margin-left: {blockLeft - offsetLeft}px; width: {blockWidth}px;"
 		>
 			<div
@@ -255,7 +255,32 @@
 					? `tl-selected tl-active-handle-${handle.toLowerCase()}`
 					: ''}"
 			>
-				<div class="tl-block-left">
+
+			<slot {markers} name="markers">
+				{#if markers.length > 0}
+					<div class="tl-block-markers absolute top-0 w-full overflow-hidden bottom-0 pointer-events-none">
+						{#each markers as marker, index}
+							<div
+								class="tl-block-marker-wrapper absolute h-full"
+								style="left: {marker.time * timeToPixel}px; top: 1px;"
+							>
+								<BlockMarker time={marker.time + block.absoluteInTime} {index}
+								on:mouseover={() => {
+									if (handle) return;
+									scrubOverride.set(true);
+									time.set(marker.time + block.absoluteInTime);
+								}}
+								on:mouseleave={() => {
+									if (handle) return;
+									scrubOverride.set(false);
+								}}></BlockMarker>
+							</div>
+						{/each}
+					</div>
+				{/if}
+			</slot>
+
+				<div class="tl-block-left z-40">
 					<slot {noHandles} {disabled} name="inHandle">
 						{#if !noHandles}
 							<BlockHandle
@@ -278,7 +303,7 @@
 					</slot>
 				</div>
 				<div
-					class="tl-block-content {bgColor}"
+					class="tl-block-content z-10"
 					style="{cursorClass};"
 					on:pointerdown={selectBlockHandle}
 				>
@@ -292,9 +317,10 @@
 							</div>
 						{/if}
 					</slot>
+				
 				</div>
 
-				<div class="tl-block-right">
+				<div class="tl-block-right z-40">
 					<slot {noHandles} {disabled} name="outHandle">
 						{#if !noHandles}
 							<BlockHandle
@@ -316,22 +342,13 @@
 						{/if}
 					</slot>
 				</div>
+
+
+
+
 			</div>
 
-			<slot {markers} name="markers">
-				{#if markers.length > 0}
-					<div class="tl-block-markers relative overflow-hidden h-4">
-						{#each markers as marker, index}
-							<div
-								class="tl-block-marker-wrapper absolute"
-								style="left: {marker.time * timeToPixel}px; top: 1px;"
-							>
-								<BlockMarker time={marker.time + block.absoluteInTime} {index}></BlockMarker>
-							</div>
-						{/each}
-					</div>
-				{/if}
-			</slot>
+
 
 			{#if block.layers.length > 0}
 				<div class="tl-block-children">
@@ -358,9 +375,6 @@
 		@apply h-full;
 	}
 
-	.tl-block-markers {
-		@apply flex items-stretch border rounded-sm shadow-sm;
-	}
 
 	.tl-block-main {
 		@apply flex items-stretch border rounded-sm shadow-sm;
