@@ -19,7 +19,7 @@
 <div
 	title="marker #{index} at {time}"
 	style='cursor: default; margin-left: -50%;'
-	class="tl-block-marker relative w-4 h-full flex items-center justify-center pointer-events-auto z-20"
+	class="peer tl-block-marker relative w-4 h-full flex items-center justify-center pointer-events-auto z-20"
 	on:pointerdown
 	on:mouseover
 	on:focus
@@ -33,12 +33,8 @@
 <!-- Render graphic marker under block content-->
 <div
 	title="marker at {time}"
-	style='cursor: default; margin-left: -50%;'
-	class="tl-block-marker absolute w-4 h-full top-0 flex items-center justify-center pointer-events-none z-0 bg-opacity-50"
+	style='cursor: default; margin-left: -1px; width: 1px;'
+	class="tl-block-marker absolute top-0 flex items-center justify-center pointer-events-none z-0 bg-white peer-hover:opacity-60 peer-hover:bg-black opacity-50 h-full w-1 "
 	>
-
-	<div 
-	style="width: 2px;"
-	class="h-full w-1 bg-blue-500"></div>
 
 </div>
