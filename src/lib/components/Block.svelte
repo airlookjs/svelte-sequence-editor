@@ -194,12 +194,11 @@
 
 	// should this also be cursor ew-resize?
 
-	let blockLeft: number, blockRight: number, blockWidth: number, timeToPixel: number;
+	let blockLeft: number, blockRight: number, blockWidth: number;
 	$: {
 		blockLeft = (block.inTime / $duration) * $width;
 		blockRight = $width - (block.outTime / $duration) * $width;
 		blockWidth = $width - (blockRight + blockLeft);
-		timeToPixel = (1 / $duration) * $width;
 	}
 	$: handle =
 		$selectedHandle?.block.getAbsoluteKey() == block.getAbsoluteKey()
