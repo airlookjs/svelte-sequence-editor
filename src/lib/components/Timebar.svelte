@@ -58,8 +58,8 @@
 
 <!-- @component `Timebar` must be descendent of `Sequence`. -->
 <style lang="postcss">
-	.tl-timebar-container {
-	}
+	/*.tl-timebar-container {
+	}*/
 	.tl-timebar {
 		@apply flex bg-gray-100 bg-opacity-50 rounded-md shadow-inner py-1;
 	}
@@ -67,7 +67,8 @@
 		@apply flex-none;
 	}
 	.tl-timebar-center {
-		@apply flex-1 invisible;
+		visibility: hidden;
+		@apply flex-1;
 	}
 	.tl-timebar-right {
 		@apply flex-none text-right;
@@ -89,22 +90,22 @@
 		@apply pr-2 not-italic font-mono;
 	}
 	:global(.tl-sequence-container:hover) .tl-timebar-center {
-		@apply visible;
+		visibility: visible;
 	}
 
 	.scrub-active .tl-timebar-center {
-		@apply visible;
+		visibility: visible;
 	}
 
 	:global(.tl-sequence-container:hover) .tl-start {
-		@apply invisible;
+		visibility: hidden;
 	}
 	.scrub-active .tl-start,
 	.scrub-active .tl-duration {
-		@apply invisible;
+		visibility: hidden;
 	}
 
 	:global(.tl-sequence-container:hover) .tl-duration {
-		@apply invisible;
+		visibility: hidden;
 	}
 </style>
