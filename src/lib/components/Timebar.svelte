@@ -88,14 +88,22 @@
 	.tl-duration {
 		@apply pr-2 not-italic font-mono;
 	}
-	:global(.tl-sequence-container:hover) .tl-timebar-center,
+	:global(.tl-sequence-container:hover) .tl-timebar-center {
+		@apply visible;
+	}
+
 	.scrub-active .tl-timebar-center {
 		@apply visible;
 	}
-	:global(.tl-sequence-container:hover) .tl-start,
-	:global(.tl-sequence-container:hover) .tl-duration,
-	.scrub-active .tl-start,
-	.scrub-active .tl-duration {
+
+	:global(.tl-sequence-container:hover) .tl-start {
+		@apply invisible;
+	}
+	.scrub-active .tl-start, .scrub-active .tl-duration {
+		@apply invisible;
+	}
+	
+	:global(.tl-sequence-container:hover) .tl-duration {
 		@apply invisible;
 	}
 </style>

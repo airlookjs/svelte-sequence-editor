@@ -51,6 +51,6 @@
 	}
 
 	.tl-timebar-indicator {
-		@apply border-l border-neutral-500 h-full z-50 opacity-50;
+		@apply border-l border-neutral-500 h-full z-50 opacity-50 pointer-events-none;
 	}
 </style>

@@ -29,7 +29,6 @@
 	export let markers = block.markers ?? [];
 
 
-
 	let blockEl: HTMLElement | null;
 	type BlockHandleType = 'inTime' | 'outTime' | 'block';
 
@@ -199,7 +198,10 @@
 		: moveable && !noHandles
 			? 'cursor: grab'
 			: 'cursor: default';
-	const bgColor = 'bg-amber-200';
+
+	export let bgColor = 'bg-amber-200';
+
+	// should this also be cursor ew-resize?
 
 	let blockLeft: number, blockRight: number, blockWidth: number, timeToPixel: number;
 	$: {
@@ -258,29 +260,18 @@
 
 			<slot {markers} name="markers">
 				{#if markers.length > 0}
-					<div class="tl-block-markers absolute top-0 w-full overflow-hidden bottom-0 pointer-events-none">
+					<div class="tl-block-markers">
 						{#each markers as marker, index}
-							<div
-								class="tl-block-marker-wrapper absolute h-full"
-								style="left: {marker.time * timeToPixel}px; top: 1px;"
-							>
-								<BlockMarker time={marker.time + block.absoluteInTime} {index}
-								on:mouseover={() => {
-									if (handle) return;
-									scrubOverride.set(true);
-									time.set(marker.time + block.absoluteInTime);
-								}}
-								on:mouseleave={() => {
-									if (handle) return;
-									scrubOverride.set(false);
-								}}></BlockMarker>
-							</div>
+								<BlockMarker time={marker.time} {index}
+								disableSnapping={handle != null}
+								block={block}></BlockMarker>
+
 						{/each}
 					</div>
 				{/if}
 			</slot>
 
-				<div class="tl-block-left z-40">
+				<div class="tl-block-left">
 					<slot {noHandles} {disabled} name="inHandle">
 						{#if !noHandles}
 							<BlockHandle
@@ -303,7 +294,7 @@
 					</slot>
 				</div>
 				<div
-					class="tl-block-content z-10"
+					class="tl-block-content"
 					style="{cursorClass};"
 					on:pointerdown={selectBlockHandle}
 				>
@@ -320,7 +311,7 @@
 				
 				</div>
 
-				<div class="tl-block-right z-40">
+				<div class="tl-block-right">
 					<slot {noHandles} {disabled} name="outHandle">
 						{#if !noHandles}
 							<BlockHandle
@@ -343,11 +334,7 @@
 					</slot>
 				</div>
 
-
-
-
 			</div>
-
 
 
 			{#if block.layers.length > 0}
@@ -367,14 +354,9 @@
 </svelte:element>
 
 <style lang="postcss">
-	@tailwind base;
-	@tailwind components;
-	@tailwind utilities;
-
 	.tl-block {
 		@apply h-full;
 	}
-
 
 	.tl-block-main {
 		@apply flex items-stretch border rounded-sm shadow-sm;
@@ -386,10 +368,16 @@
 
 	.tl-block-left,
 	.tl-block-right {
-		@apply flex-none;
+		@apply flex-none z-40;
 	}
 
 	.tl-block-content {
-		@apply flex-1 overflow-hidden ml-1 p-0.5;
+		@apply flex-1 overflow-hidden ml-1 p-0.5 z-10;
 	}
+
+	.tl-block-markers {
+		@apply absolute top-0 w-full overflow-hidden bottom-0 pointer-events-none;
+	}
+
+
 </style>
