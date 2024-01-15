@@ -1,10 +1,8 @@
-
 import type { Sequence } from '$lib/Sequence';
 import type { TSelectedHandle } from '$lib/types';
 import type { Writable } from 'svelte/store';
 
 import { getContext, setContext } from 'svelte';
-
 
 export type SequenceContext = {
 	time: Writable<number>;
@@ -14,7 +12,7 @@ export type SequenceContext = {
 	snapTimes: Writable<number[]>;
 	scrubOverride: Writable<boolean>;
 	sequence: Writable<Sequence>;
-}
+};
 
 export const key = Symbol();
 

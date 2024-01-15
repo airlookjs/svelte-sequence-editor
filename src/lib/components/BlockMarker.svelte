@@ -16,10 +16,13 @@
 	$: absoluteTime = time + block.absoluteInTime;
 
 	//$: active = $playheadTime == absoluteTime;
-
 </script>
 
-<svelte:element this={tag} class="tl-block-marker-wrapper" style="left: {time * timeToPixel}px; top: 0;">	
+<svelte:element
+	this={tag}
+	class="tl-block-marker-wrapper"
+	style="left: {time * timeToPixel}px; top: 0;"
+>
 	<!-- Render transparent interactive marker above block content (block handle)-->
 	<div
 		title="marker #{index} at {time}"
@@ -41,13 +44,14 @@
 	</div>
 
 	<!-- Render graphic marker under block content-->
-	<div title="marker at {time}" class="tl-block-marker-indicator" class:at-playhead={$playheadTime == absoluteTime}>
-		<div class="tick">
-		</div>
-		<div class="spacer flex-grow">
-		</div>
-		<div class="tick">
-		</div>
+	<div
+		title="marker at {time}"
+		class="tl-block-marker-indicator"
+		class:at-playhead={$playheadTime == absoluteTime}
+	>
+		<div class="tick"></div>
+		<div class="spacer flex-grow"></div>
+		<div class="tick"></div>
 	</div>
 </svelte:element>
 
@@ -78,8 +82,8 @@
 		width: 0.125rem;
 	}
 
-	.at-playhead .tick, .at-playhead .spacer {
+	.at-playhead .tick,
+	.at-playhead .spacer {
 		@apply bg-red-800 dark:bg-red-400 bg-opacity-100;
 	}
-
 </style>

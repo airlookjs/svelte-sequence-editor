@@ -3,11 +3,9 @@
 
 	export let data: Layer;
 	export let index: number;
-
-	
 </script>
 
-<SequenceLayer {data} {index} >
+<SequenceLayer {data} {index}>
 	<div slot="header" let:nestedLayerCount>
 		Layer {index}. with {nestedLayerCount} nested layers
 	</div>

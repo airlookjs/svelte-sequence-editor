@@ -14,19 +14,11 @@
 
 	import type { Block } from '../Block';
 
-	const {
-		duration,
-		width,
-		selectedHandle,
-		sequence,
-		time,
-		scrubOverride,
-		snapTimes
-	}= getSequenceContext();
+	const { duration, width, selectedHandle, sequence, time, scrubOverride, snapTimes } =
+		getSequenceContext();
 
 	export let block: Block;
 	export let markers = block.markers ?? [];
-
 
 	let blockEl: HTMLElement | null;
 	type BlockHandleType = 'inTime' | 'outTime' | 'block';
@@ -198,8 +190,7 @@
 			? 'cursor: grab'
 			: 'cursor: default';
 
-		
-	export let bgColor = `bg-amber-200 dark:bg-amber-900`
+	export let bgColor = `bg-amber-200 dark:bg-amber-900`;
 
 	// should this also be cursor ew-resize?
 

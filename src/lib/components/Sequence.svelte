@@ -29,7 +29,7 @@
 		width,
 		snapTimes,
 		selectedHandle,
-		scrubOverride,
+		scrubOverride
 	});
 
 	$: currentTime = $time;
@@ -53,7 +53,7 @@
 		selectedHandle.set(null);
 	};
 
-	$: background = cssBackgroundGuides($duration, 2000, {lineWidth: 0.5});
+	$: background = cssBackgroundGuides($duration, 2000, { lineWidth: 0.5 });
 
 	$: layers = $sequenceData.layers.sort((a, b) => {
 		return a.sortIndex - b.sortIndex;

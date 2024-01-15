@@ -137,8 +137,7 @@
 	}
 
 	.tl-layer.tl-depth-1 {
-		@apply border-b ;
-
+		@apply border-b;
 	}
 
 	/*:global(.tl-layer-container:nth-child(odd)) .tl-layer {

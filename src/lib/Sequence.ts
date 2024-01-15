@@ -128,5 +128,3 @@ export class Sequence implements ISequenceCommon {
 		}
 	}*/
 }
-
-

@@ -1,7 +1,6 @@
 <!-- @component `BlockHandle` must be descendent of `SequenceBlock`. -->
 
 <script lang="ts">
-
 	import type { Block } from '../Block';
 	import { getSequenceContext } from './SequenceContext';
 
@@ -16,7 +15,11 @@
 	export let disabled = false;
 	export let block: Block | undefined = undefined;
 
-	$: absoluteTime = block ? (type == 'inTime') ? block.absoluteInTime : block.absoluteOutTime : undefined;
+	$: absoluteTime = block
+		? type == 'inTime'
+			? block.absoluteInTime
+			: block.absoluteOutTime
+		: undefined;
 
 	/*
 	{#if typeof fixed == 'number'}
@@ -46,7 +49,7 @@
 
 <style lang="postcss">
 	.tl-handle {
-		@apply w-4 overflow-hidden text-center h-full bg-gray-900 bg-opacity-20 dark:bg-white dark:bg-opacity-30 ;
+		@apply w-4 overflow-hidden text-center h-full bg-gray-900 bg-opacity-20 dark:bg-white dark:bg-opacity-30;
 	}
 
 	.tl-handle:not(.tl-active):hover {
@@ -64,7 +67,6 @@
 	.tl-active {
 		@apply bg-black bg-opacity-70 dark:bg-white dark:bg-opacity-70;
 	}
-
 
 	.at-playhead {
 		@apply border-red-800 dark:border-red-400;
