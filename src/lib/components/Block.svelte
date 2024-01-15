@@ -28,7 +28,6 @@
 	export let block: Block;
 	export let markers = block.markers ?? [];
 
-
 	let blockEl: HTMLElement | null;
 	type BlockHandleType = 'inTime' | 'outTime' | 'block';
 
@@ -257,19 +256,16 @@
 					? `tl-selected tl-active-handle-${handle.toLowerCase()}`
 					: ''}"
 			>
-
-			<slot {markers} name="markers">
-				{#if markers.length > 0}
-					<div class="tl-block-markers">
-						{#each markers as marker, index}
-								<BlockMarker time={marker.time} {index}
-								disableSnapping={handle != null}
-								block={block}></BlockMarker>
-
-						{/each}
-					</div>
-				{/if}
-			</slot>
+				<slot {markers} name="markers">
+					{#if markers.length > 0}
+						<div class="tl-block-markers">
+							{#each markers as marker, index}
+								<BlockMarker time={marker.time} {index} disableSnapping={handle != null} {block}
+								></BlockMarker>
+							{/each}
+						</div>
+					{/if}
+				</slot>
 
 				<div class="tl-block-left">
 					<slot {noHandles} {disabled} name="inHandle">
@@ -293,11 +289,7 @@
 						{/if}
 					</slot>
 				</div>
-				<div
-					class="tl-block-content"
-					style="{cursorClass};"
-					on:pointerdown={selectBlockHandle}
-				>
+				<div class="tl-block-content" style="{cursorClass};" on:pointerdown={selectBlockHandle}>
 					<slot {noHandles} {disabled} {block} name="content">
 						{title}
 						{#if block.errors.length > 0}
@@ -308,7 +300,6 @@
 							</div>
 						{/if}
 					</slot>
-				
 				</div>
 
 				<div class="tl-block-right">
@@ -333,9 +324,7 @@
 						{/if}
 					</slot>
 				</div>
-
 			</div>
-
 
 			{#if block.layers.length > 0}
 				<div class="tl-block-children">
@@ -378,6 +367,4 @@
 	.tl-block-markers {
 		@apply absolute top-0 w-full overflow-hidden bottom-0 pointer-events-none;
 	}
-
-
 </style>

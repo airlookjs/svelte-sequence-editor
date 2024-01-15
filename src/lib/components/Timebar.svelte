@@ -99,10 +99,11 @@
 	:global(.tl-sequence-container:hover) .tl-start {
 		@apply invisible;
 	}
-	.scrub-active .tl-start, .scrub-active .tl-duration {
+	.scrub-active .tl-start,
+	.scrub-active .tl-duration {
 		@apply invisible;
 	}
-	
+
 	:global(.tl-sequence-container:hover) .tl-duration {
 		@apply invisible;
 	}
