@@ -15,6 +15,9 @@
 
 	$: timeToPixel = (1 / $duration) * $width;
 	$: absoluteTime = time + block.absoluteInTime;
+
+	//$: active = $sequenceTime == absoluteTime;
+
 </script>
 
 <svelte:element this={tag} class="tl-block-marker-wrapper" style="left: {time * timeToPixel}px; top: 0;">	
@@ -39,7 +42,7 @@
 	</div>
 
 	<!-- Render graphic marker under block content-->
-	<div title="marker at {time}" class="tl-block-marker-indicator">
+	<div title="marker at {time}" class="tl-block-marker-indicator" class:playhead={$sequenceTime == absoluteTime}>
 		<div class="top">
 		</div>
 		<div class="flex-grow">
@@ -69,5 +72,14 @@
 
 	.tl-block-marker-indicator .top, .tl-block-marker-indicator .bottom {
 		@apply bg-gray-800 dark:bg-gray-100 bg-opacity-50 dark:bg-opacity-50 h-1;
+	}
+
+	.tl-block-marker-indicator.playhead {
+		margin-left: -0.125rem;
+		width: 0.125rem;
+	}
+
+	.tl-block-marker-indicator.playhead div {
+		@apply bg-red-800 dark:bg-red-400 bg-opacity-100 h-2;
 	}
 </style>
