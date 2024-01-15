@@ -3,6 +3,7 @@
 	import { createSequence } from '$lib/createSequence';
 	import { writable } from 'svelte/store';
 	import CustomLayer from './CustomLayer.svelte';
+	import { Label, Input } from 'flowbite-svelte';
 
 	const PromoterBlockTemplate = {
 		key: 'promoter',
@@ -176,48 +177,59 @@
 	const durationChangeHandler = (e: Event) => {
 		$duration = (e.target as HTMLInputElement).valueAsNumber;
 	};
+
+	/*
+	TODO: toggle snapping
+	*/
 </script>
 
 <section class="pb-6">
-	<h2 class="text-2xl">Scene Detection Markers with snapping</h2>
+	<h2 class="text-2xl mb-6">Example with markers and custom styling</h2>
 
-	<h3>Bind data from a form to the sequence editor</h3>
+	<h3 class="mb-4 text-lg">Bind data from a form to the sequence editor</h3>
 
-	<label for="duration">Duration</label>
-	<input
-		name="duration"
-		id="duration"
-		type="number"
-		value={$duration}
-		on:change={durationChangeHandler}
-	/>
+	<div class="mb-4">
+		<Label for="duration">Duration</Label>
+		<Input
+			name="duration"
+			id="duration"
+			type="number"
+			value={$duration}
+			on:change={durationChangeHandler}
+		/>
+	</div>
 
-	<input
-		type="number"
-		name="videoin"
-		value={$footageblock.absoluteInTime}
-		on:change={videoInChangeHandler}
-	/>
+	<div class="mb-4">
+		<Label for="videoin">Video in</Label>
+		<Input
+			type="number"
+			id="videoin"
+			value={$footageblock.absoluteInTime}
+			on:change={videoInChangeHandler}
+		/>
+	</div>
 
-	<h3>Default rendering</h3>
-	<Sequence {options} {duration} {sequence} />
+	<div class="mb-6">
+		<h3 class="mb-2 text-lg">Default rendering</h3>
+		<Sequence {options} {duration} {sequence} />
+	</div>
 
-	<h3>Custom rendering</h3>
-	<Sequence
-		{sequence}
-		bind:currentTime={$time}
-		class="mb-4 w-full dark:border-gray-700 dark:bg-gray-800"
-	>
-		<SequenceTimebar slot="timebar" formatTimeFn={(value) => `${value}`} class="dark:bg-gray-900" />
+	<div class="mb-6">
+		<h3 class="mb-2 text-lg">Custom rendering</h3>
+		<Sequence
+			{sequence}
+			bind:currentTime={$time}
+			class="mb-4 w-full dark:border-gray-700 dark:bg-gray-800"
+		>
+			<SequenceTimebar
+				slot="timebar"
+				formatTimeFn={(value) => `${value}`}
+				class="dark:bg-gray-900"
+			/>
 
-		<svelte:fragment slot="layer" let:layer let:index>
-			<CustomLayer data={layer} {index} />
-		</svelte:fragment>
-
-		<!--
-							TODO: add sequence markers on its own speacial layer fronm a context that has times of scene changes from the primary video used in the template
-							testing in svelte-sequence-editor first then integrating here
-							<SequenceMarkers/>
-						-->
-	</Sequence>
+			<svelte:fragment slot="layer" let:layer let:index>
+				<CustomLayer data={layer} {index} />
+			</svelte:fragment>
+		</Sequence>
+	</div>
 </section>

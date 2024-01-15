@@ -6,12 +6,11 @@
 </script>
 
 <SequenceLayer {data} {index}>
-	<div slot="header">
-		{data.key}
-		{index}
+	<div slot="header" let:nestedLayerCount>
+		Layer {index}. with {nestedLayerCount} nested layers
 	</div>
 
-	<SequenceBlock slot="block" let:block {block}>
+	<SequenceBlock slot="block" let:block {block} bgColor="bg-blue-200 dark:bg-blue-900">
 		<!-- <svelte:fragment slot="layers" let:layers>
             {#each layers as _layer, i (_layer.key)}
                 <svelte:self layer={_layer} index={i} />

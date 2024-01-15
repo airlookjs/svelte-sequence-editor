@@ -7,16 +7,15 @@
 	import SequenceBlock from '../components/Block.svelte';
 	//import { flip } from 'svelte/animate';
 	//import type { FlipParams } from 'svelte/animate';
-	import { key } from './key';
-	import { afterUpdate, getContext } from 'svelte';
+	import { getSequenceContext } from './SequenceContext';
+	import { afterUpdate } from 'svelte';
 	import { uniqueClasses } from '../utils';
 	import { fade } from 'svelte/transition';
-	import type { SequenceContext } from '../types';
 	import type { Layer } from '../Layer';
 	import type { Block } from '../Block';
 
 	//export let animate: FlipParams = {};
-	const { width, duration }: SequenceContext = getContext(key);
+	const { width, duration } = getSequenceContext();
 	let layerEl: HTMLElement | null;
 
 	export let data: Layer;
@@ -93,7 +92,7 @@
 	{...$$restProps}
 >
 	<slot {blocks} {layer} {layerLeft} {layerRight} {layerWidth} {nestedLayerCount}>
-		<slot name="header">
+		<slot name="header" {nestedLayerCount}>
 			{#if title}
 				<div class="">
 					<h2 class="">{title}</h2>
@@ -134,7 +133,7 @@
 	}
 
 	.tl-layer {
-		@apply flex items-stretch border-r border-l rounded-lg border-dashed border-gray-400 shadow-inner;
+		@apply flex items-stretch border-r border-l rounded-lg border-dashed border-gray-300 dark:border-gray-600 shadow-inner;
 	}
 
 	.tl-layer.tl-depth-1 {
@@ -146,11 +145,11 @@
 	}*/
 
 	.tl-index-odd {
-		@apply bg-gray-100 bg-opacity-50;
+		@apply bg-gray-100 dark:bg-gray-800 bg-opacity-50 dark:bg-opacity-50;
 	}
 
 	.tl-index-even {
-		@apply bg-gray-200 bg-opacity-50;
+		@apply bg-gray-50 dark:bg-gray-900 bg-opacity-50 dark:bg-opacity-50;
 	}
 
 	.tl-layer.tl-depth-1.tl-index-0 {

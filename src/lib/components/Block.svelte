@@ -4,28 +4,22 @@
 </script>
 
 <script lang="ts">
-	import { getContext } from 'svelte';
 	import { uniqueClasses } from '../utils';
 	import { fade } from 'svelte/transition';
-	import { key } from './key';
+	import { getSequenceContext } from './SequenceContext';
+
 	import Layer from '../components/Layer.svelte';
 	import BlockHandle from '../components/BlockHandle.svelte';
 	import BlockMarker from '../components/BlockMarker.svelte';
 
 	import type { Block } from '../Block';
-	import type { SequenceContext } from '../types';
 
-	const {
-		duration,
-		width,
-		selectedHandle,
-		sequence,
-		time,
-		scrubOverride,
-		snapTimes
-	}: SequenceContext = getContext(key);
+	const { duration, width, selectedHandle, sequence, time, scrubOverride, snapTimes } =
+		getSequenceContext();
 
 	export let block: Block;
+	export let markers = block.markers ?? [];
+
 	let blockEl: HTMLElement | null;
 	type BlockHandleType = 'inTime' | 'outTime' | 'block';
 
@@ -181,7 +175,6 @@
 	};
 
 	//const timeToPixel = (t: number) => (t / $duration) * $width;
-
 	//$: console.log(accDeltaTime);
 
 	export let tag = 'div';
@@ -196,14 +189,16 @@
 		: moveable && !noHandles
 			? 'cursor: grab'
 			: 'cursor: default';
-	const bgColor = 'bg-amber-200';
 
-	let blockLeft: number, blockRight: number, blockWidth: number, timeToPixel: number;
+	export let bgColor = `bg-amber-200 dark:bg-amber-900`;
+
+	// should this also be cursor ew-resize?
+
+	let blockLeft: number, blockRight: number, blockWidth: number;
 	$: {
 		blockLeft = (block.inTime / $duration) * $width;
 		blockRight = $width - (block.outTime / $duration) * $width;
 		blockWidth = $width - (blockRight + blockLeft);
-		timeToPixel = (1 / $duration) * $width;
 	}
 	$: handle =
 		$selectedHandle?.block.getAbsoluteKey() == block.getAbsoluteKey()
@@ -239,12 +234,12 @@
 					$snapTimes = [
 						block.absoluteInTime,
 						block.absoluteOutTime,
-						...block.markers.map((m) => m.time + block.absoluteInTime)
+						...markers.map((m) => m.time + block.absoluteInTime)
 					];
 				}
-				console.log($snapTimes);
+				//console.log($snapTimes);
 			}}
-			class="tl-block"
+			class="tl-block relative"
 			style="margin-left: {blockLeft - offsetLeft}px; width: {blockWidth}px;"
 		>
 			<div
@@ -252,12 +247,24 @@
 					? `tl-selected tl-active-handle-${handle.toLowerCase()}`
 					: ''}"
 			>
+				<slot {markers} name="markers">
+					{#if markers.length > 0}
+						<div class="tl-block-markers">
+							{#each markers as marker, index}
+								<BlockMarker time={marker.time} {index} disableSnapping={handle != null} {block}
+								></BlockMarker>
+							{/each}
+						</div>
+					{/if}
+				</slot>
+
 				<div class="tl-block-left">
 					<slot {noHandles} {disabled} name="inHandle">
 						{#if !noHandles}
 							<BlockHandle
 								type="inTime"
 								{disabled}
+								{block}
 								selected={handle}
 								fixed={typeof block.validations?.inTime?.fixed == 'number'}
 								on:pointerdown={selectInHandle}
@@ -274,13 +281,9 @@
 						{/if}
 					</slot>
 				</div>
-				<div
-					class="tl-block-content {bgColor}"
-					style="{cursorClass};"
-					on:pointerdown={selectBlockHandle}
-				>
+				<div class="tl-block-content" style="{cursorClass};" on:pointerdown={selectBlockHandle}>
 					<slot {noHandles} {disabled} {block} name="content">
-						{title}
+						<span class="inner">{title}</span>
 						{#if block.errors.length > 0}
 							<div class="text-red-500">
 								{#each block.errors as error}
@@ -298,6 +301,7 @@
 								type="outTime"
 								selected={handle}
 								{disabled}
+								{block}
 								fixed={typeof block.validations?.outTime?.fixed == 'number'}
 								on:pointerdown={selectOutHandle}
 								on:mouseover={() => {
@@ -314,21 +318,6 @@
 					</slot>
 				</div>
 			</div>
-
-			<slot markers={block.markers} name="markers">
-				{#if block.markers && block.markers.length > 0}
-					<div class="tl-block-markers relative overflow-hidden h-4">
-						{#each block.markers as marker, index}
-							<div
-								class="tl-block-marker-wrapper absolute"
-								style="left: {marker.time * timeToPixel}px; top: 1px;"
-							>
-								<BlockMarker time={marker.time + block.absoluteInTime} {index}></BlockMarker>
-							</div>
-						{/each}
-					</div>
-				{/if}
-			</slot>
 
 			{#if block.layers.length > 0}
 				<div class="tl-block-children">
@@ -347,32 +336,27 @@
 </svelte:element>
 
 <style lang="postcss">
-	@tailwind base;
-	@tailwind components;
-	@tailwind utilities;
-
 	.tl-block {
 		@apply h-full;
 	}
 
-	.tl-block-markers {
-		@apply flex items-stretch border rounded-sm shadow-sm;
-	}
-
 	.tl-block-main {
-		@apply flex items-stretch border rounded-sm shadow-sm;
+		@apply flex items-stretch border border-gray-100 dark:border-gray-800 rounded-sm shadow-sm;
 	}
-
 	.tl-block .tl-selected {
 		@apply shadow;
 	}
 
 	.tl-block-left,
 	.tl-block-right {
-		@apply flex-none;
+		@apply flex-none z-40;
 	}
 
 	.tl-block-content {
-		@apply flex-1 overflow-hidden ml-1 p-0.5;
+		@apply flex-1 overflow-hidden ml-1 p-0.5 z-10;
+	}
+
+	.tl-block-markers {
+		@apply absolute top-0 w-full overflow-hidden bottom-0 pointer-events-none;
 	}
 </style>

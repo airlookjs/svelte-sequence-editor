@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { base } from '$app/paths';
 	import '../app.css';
+	import { DarkMode } from 'flowbite-svelte';
 </script>
 
 <header class="p-6 container">
@@ -10,6 +11,8 @@
 		<a href="{base}/examples/markers" class="p-2">Markers</a>
 		<a href="{base}/examples/svg" class="p-2">SVG</a>
 	</nav>
+
+	<DarkMode />
 </header>
 
 <main class="p-6 container">

@@ -82,14 +82,3 @@ export type TSelectedHandle = Writable<null | {
 	cursor: string;
 	handle: BlockHandleType;
 }>;
-
-export interface SequenceContext {
-	time: Writable<number>;
-	width: Writable<number>;
-	duration: Writable<number>;
-	selectedHandle: TSelectedHandle;
-	snapTimes: Writable<number[]>;
-	scrubOverride: Writable<boolean>;
-	sequence: Writable<Sequence>;
-	setTime: (value: number) => void;
-}

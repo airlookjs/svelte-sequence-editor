@@ -10,7 +10,7 @@ UI widget and logic for editing timed sequences in recursively nested structures
 
 ## Documentation
 
-See [airlookjs.github.io/svelte-sequence-editor/](https://airlookjs.github.io/svelte-sequence-editor/) for more additional examples and information.
+See [airlookjs.github.io/svelte-sequence-editor/](https://airlookjs.github.io/svelte-sequence-editor/) for additional examples and documentation.
 
 ## Installation
 
