@@ -45,10 +45,10 @@
 
 <style lang="postcss">
 	.tl-timebar-label {
-		@apply absolute font-semibold font-mono text-center text-white bg-neutral-500 rounded-sm px-1;
+		@apply absolute font-semibold font-mono text-center px-1 z-50 bg-gray-50 dark:bg-gray-800;
 	}
 
 	.tl-timebar-indicator {
-		@apply border-l border-neutral-500 h-full z-50 opacity-50 pointer-events-none;
+		@apply border-l border-red-800 dark:border-red-400 h-full z-40 opacity-50 pointer-events-none;
 	}
 </style>
