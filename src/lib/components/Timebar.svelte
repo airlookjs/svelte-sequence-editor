@@ -1,12 +1,11 @@
 <script lang="ts">
-	import { getContext } from 'svelte';
 	import type { SequenceContext } from '../types';
-	import { key } from './key';
+	import { getSequenceContext } from './SequenceContext';
 	import { uniqueClasses } from '../utils';
 
 	import TimebarLabel from './TimebarLabel.svelte';
 
-	const { time, duration, scrubOverride, selectedHandle }: SequenceContext = getContext(key);
+	const { time, duration, scrubOverride, selectedHandle } = getSequenceContext();
 
 	export let formatTimeFn = (value: number) => `${Math.round(value)}`;
 

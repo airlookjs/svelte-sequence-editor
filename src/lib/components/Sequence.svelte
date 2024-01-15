@@ -1,11 +1,10 @@
 <script lang="ts">
 	import Layer from './Layer.svelte';
 	import Timebar from './Timebar.svelte';
-	import type { SequenceContext, TSelectedHandle } from '../types';
-	import { key } from './key';
+	import type { TSelectedHandle } from '../types';
 	import { writable } from 'svelte/store';
 	import { uniqueClasses } from '../utils';
-	import { setContext } from 'svelte';
+	import { setSequenceContext } from './SequenceContext';
 	import type { createSequence } from '$lib/createSequence';
 
 	export let sequence: ReturnType<typeof createSequence>;
@@ -22,7 +21,7 @@
 	const disabled = writable(false);
 	const snapTimes = writable([]);
 
-	const context: SequenceContext = {
+	setSequenceContext({
 		time,
 		duration,
 		sequence: sequenceData,
@@ -30,10 +29,8 @@
 		snapTimes,
 		selectedHandle,
 		scrubOverride,
-		setTime: (_value) => time.set(_value)
-	};
+	});
 
-	setContext(key, context);
 
 	$: currentTime = $time;
 	let containerClasses = 'tl-sequence-container';
@@ -95,7 +92,7 @@
 	style={gridBackground}
 	{...$$restProps}
 >
-	<slot {currentTime} setTime={context.setTime} layers={$sequenceData.layers}>
+	<slot {currentTime} layers={$sequenceData.layers}>
 		<slot name="timebar">
 			<Timebar />
 		</slot>

@@ -1,9 +1,7 @@
 <script lang="ts">
 	import type { Block } from '../Block';
-	import type { SequenceContext } from '../types';
 
-	import { getContext } from 'svelte';
-	import { key } from './key';
+	import { getSequenceContext } from './SequenceContext';
 
 	export let time: number;
 	export let index: number;
@@ -13,7 +11,7 @@
 
 	export let tag = 'div';
 
-	const { duration, width, scrubOverride, time: sequenceTime }: SequenceContext = getContext(key);
+	const { duration, width, scrubOverride, time: sequenceTime } = getSequenceContext();
 
 	$: timeToPixel = (1 / $duration) * $width;
 	$: absoluteTime = time + block.absoluteInTime;

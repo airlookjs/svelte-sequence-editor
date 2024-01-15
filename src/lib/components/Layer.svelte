@@ -7,8 +7,8 @@
 	import SequenceBlock from '../components/Block.svelte';
 	//import { flip } from 'svelte/animate';
 	//import type { FlipParams } from 'svelte/animate';
-	import { key } from './key';
-	import { afterUpdate, getContext } from 'svelte';
+	import { getSequenceContext } from './SequenceContext';
+	import { afterUpdate } from 'svelte';
 	import { uniqueClasses } from '../utils';
 	import { fade } from 'svelte/transition';
 	import type { SequenceContext } from '../types';
@@ -16,7 +16,7 @@
 	import type { Block } from '../Block';
 
 	//export let animate: FlipParams = {};
-	const { width, duration }: SequenceContext = getContext(key);
+	const { width, duration } = getSequenceContext();
 	let layerEl: HTMLElement | null;
 
 	export let data: Layer;

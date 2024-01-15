@@ -1,10 +1,8 @@
 <script lang="ts">
 	import { uniqueClasses } from '../utils';
-	import { getContext } from 'svelte';
-	import type { SequenceContext } from '../types';
-	import { key } from './key';
+	import { getSequenceContext } from './SequenceContext';
 
-	const { duration, width }: SequenceContext = getContext(key);
+	const { duration, width } = getSequenceContext();
 
 	export let formatFn = (value: number) => `${Math.round(value)}`;
 	export let time: number;

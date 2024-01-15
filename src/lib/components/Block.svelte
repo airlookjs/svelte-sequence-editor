@@ -4,16 +4,14 @@
 </script>
 
 <script lang="ts">
-	import { getContext } from 'svelte';
 	import { uniqueClasses } from '../utils';
 	import { fade } from 'svelte/transition';
-	import { key } from './key';
+	import { getSequenceContext } from './SequenceContext';
 	import Layer from '../components/Layer.svelte';
 	import BlockHandle from '../components/BlockHandle.svelte';
 	import BlockMarker from '../components/BlockMarker.svelte';
 
 	import type { Block } from '../Block';
-	import type { SequenceContext } from '../types';
 
 	const {
 		duration,
@@ -23,7 +21,7 @@
 		time,
 		scrubOverride,
 		snapTimes
-	}: SequenceContext = getContext(key);
+	}= getSequenceContext();
 
 	export let block: Block;
 	export let markers = block.markers ?? [];
