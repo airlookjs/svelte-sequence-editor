@@ -11,13 +11,15 @@
 	export let disableSnapping = false;
 	export let block: Block;
 
+	export let tag = 'div';
+
 	const { duration, width, scrubOverride, time: sequenceTime }: SequenceContext = getContext(key);
 
 	$: timeToPixel = (1 / $duration) * $width;
 	$: absoluteTime = time + block.absoluteInTime;
 </script>
 
-<div class="tl-block-marker-wrapper" style="left: {time * timeToPixel}px; top: 1px;">
+<svelte:element this={tag} class="tl-block-marker-wrapper" style="left: {time * timeToPixel}px; top: 1px;">	
 	<!-- Render transparent interactive marker above block content (block handle)-->
 	<div
 		title="marker #{index} at {time}"
@@ -40,7 +42,7 @@
 
 	<!-- Render graphic marker under block content-->
 	<div title="marker at {time}" class="tl-block-marker-indicator"></div>
-</div>
+</svelte:element>
 
 <style lang="postcss">
 	.tl-block-marker-wrapper {
