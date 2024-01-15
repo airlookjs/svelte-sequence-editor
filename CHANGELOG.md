@@ -1,3 +1,28 @@
+# [4.0.0](https://github.com/airlookjs/svelte-sequence-editor/compare/v3.0.0...v4.0.0) (2024-01-15)
+
+
+### Bug Fixes
+
+* dont spam console ([2f6b539](https://github.com/airlookjs/svelte-sequence-editor/commit/2f6b5394806abb3df1607036eb66d2f287861951))
+* wrong type on sequence context store ([58bf14f](https://github.com/airlookjs/svelte-sequence-editor/commit/58bf14ffbd1b0a7a1660ae31d5587651346fb5df))
+
+
+### chore
+
+* cleanup context set and get ([34ce238](https://github.com/airlookjs/svelte-sequence-editor/commit/34ce23811b9b0b5e96ba768ddc3a184d3c379788))
+
+
+### Features
+
+* allow to pass markers directly to block ([aa575e0](https://github.com/airlookjs/svelte-sequence-editor/commit/aa575e07057fec599f198616a320e28323796907))
+* dark mode, example with custom colored blocks ([25bea21](https://github.com/airlookjs/svelte-sequence-editor/commit/25bea21c60dd955a3ae20abd0f97f535fb33654f))
+* improve marker rendering ([df89181](https://github.com/airlookjs/svelte-sequence-editor/commit/df89181f767c3571530b4db80cc473074bf12a1a))
+
+
+### BREAKING CHANGES
+
+* removed setTime on context
+
 # [3.0.0](https://github.com/airlookjs/svelte-sequence-editor/compare/v2.0.2...v3.0.0) (2024-01-10)
 
 
