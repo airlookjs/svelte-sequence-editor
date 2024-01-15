@@ -7,6 +7,7 @@
 	import { uniqueClasses } from '../utils';
 	import { fade } from 'svelte/transition';
 	import { getSequenceContext } from './SequenceContext';
+
 	import Layer from '../components/Layer.svelte';
 	import BlockHandle from '../components/BlockHandle.svelte';
 	import BlockMarker from '../components/BlockMarker.svelte';
@@ -25,6 +26,7 @@
 
 	export let block: Block;
 	export let markers = block.markers ?? [];
+
 
 	let blockEl: HTMLElement | null;
 	type BlockHandleType = 'inTime' | 'outTime' | 'block';
@@ -272,6 +274,7 @@
 							<BlockHandle
 								type="inTime"
 								{disabled}
+								{block}
 								selected={handle}
 								fixed={typeof block.validations?.inTime?.fixed == 'number'}
 								on:pointerdown={selectInHandle}
@@ -290,7 +293,7 @@
 				</div>
 				<div class="tl-block-content" style="{cursorClass};" on:pointerdown={selectBlockHandle}>
 					<slot {noHandles} {disabled} {block} name="content">
-						<span class="inner {bgColor}">{title}</span>
+						<span class="inner">{title}</span>
 						{#if block.errors.length > 0}
 							<div class="text-red-500">
 								{#each block.errors as error}
@@ -308,6 +311,7 @@
 								type="outTime"
 								selected={handle}
 								{disabled}
+								{block}
 								fixed={typeof block.validations?.outTime?.fixed == 'number'}
 								on:pointerdown={selectOutHandle}
 								on:mouseover={() => {
@@ -349,7 +353,6 @@
 	.tl-block-main {
 		@apply flex items-stretch border border-gray-100 dark:border-gray-800 rounded-sm shadow-sm;
 	}
-
 	.tl-block .tl-selected {
 		@apply shadow;
 	}

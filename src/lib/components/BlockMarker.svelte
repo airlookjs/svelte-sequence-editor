@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { Block } from '../Block';
-
 	import { getSequenceContext } from './SequenceContext';
 
 	export let time: number;
@@ -11,12 +10,12 @@
 
 	export let tag = 'div';
 
-	const { duration, width, scrubOverride, time: sequenceTime } = getSequenceContext();
+	const { duration, width, scrubOverride, time: playheadTime } = getSequenceContext();
 
 	$: timeToPixel = (1 / $duration) * $width;
 	$: absoluteTime = time + block.absoluteInTime;
 
-	//$: active = $sequenceTime == absoluteTime;
+	//$: active = $playheadTime == absoluteTime;
 
 </script>
 
@@ -30,7 +29,7 @@
 		on:mouseover={() => {
 			if (disableSnapping) return;
 			scrubOverride.set(true);
-			sequenceTime.set(absoluteTime);
+			playheadTime.set(absoluteTime);
 		}}
 		on:mouseleave={() => {
 			if (disableSnapping) return;
@@ -42,12 +41,12 @@
 	</div>
 
 	<!-- Render graphic marker under block content-->
-	<div title="marker at {time}" class="tl-block-marker-indicator" class:playhead={$sequenceTime == absoluteTime}>
-		<div class="top">
+	<div title="marker at {time}" class="tl-block-marker-indicator" class:at-playhead={$playheadTime == absoluteTime}>
+		<div class="tick">
 		</div>
-		<div class="flex-grow">
+		<div class="spacer flex-grow">
 		</div>
-		<div class="bottom">
+		<div class="tick">
 		</div>
 	</div>
 </svelte:element>
@@ -70,16 +69,17 @@
 		@apply flex flex-col absolute pointer-events-none z-0 cursor-default;
 	}
 
-	.tl-block-marker-indicator .top, .tl-block-marker-indicator .bottom {
+	.tick {
 		@apply bg-gray-800 dark:bg-gray-100 bg-opacity-50 dark:bg-opacity-50 h-1;
 	}
 
-	.tl-block-marker-indicator.playhead {
+	.at-playhead {
 		margin-left: -0.125rem;
 		width: 0.125rem;
 	}
 
-	.tl-block-marker-indicator.playhead div {
-		@apply bg-red-800 dark:bg-red-400 bg-opacity-100 h-2;
+	.at-playhead .tick, .at-playhead .spacer {
+		@apply bg-red-800 dark:bg-red-400 bg-opacity-100;
 	}
+
 </style>
