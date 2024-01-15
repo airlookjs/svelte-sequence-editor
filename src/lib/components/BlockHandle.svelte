@@ -33,11 +33,11 @@
 
 <style lang="postcss">
 	.tl-handle {
-		@apply w-4 overflow-hidden text-center h-full border-black border-opacity-10 bg-white bg-opacity-40;
+		@apply w-4 overflow-hidden text-center h-full bg-gray-900 bg-opacity-20 dark:bg-white dark:bg-opacity-30 ;
 	}
 
 	.tl-handle:not(.tl-active):hover {
-		@apply bg-opacity-60;
+		@apply bg-opacity-60 dark:bg-opacity-60;
 	}
 
 	.tl-intime {
@@ -49,6 +49,6 @@
 	}
 
 	.tl-active {
-		@apply bg-black bg-opacity-10;
+		@apply bg-black bg-opacity-70 dark:bg-white dark:bg-opacity-70;
 	}
 </style>

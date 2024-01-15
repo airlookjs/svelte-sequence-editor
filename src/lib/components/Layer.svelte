@@ -92,7 +92,7 @@
 	{...$$restProps}
 >
 	<slot {blocks} {layer} {layerLeft} {layerRight} {layerWidth} {nestedLayerCount}>
-		<slot name="header">
+		<slot name="header" {nestedLayerCount}>
 			{#if title}
 				<div class="">
 					<h2 class="">{title}</h2>
@@ -133,11 +133,12 @@
 	}
 
 	.tl-layer {
-		@apply flex items-stretch border-r border-l rounded-lg border-dashed border-gray-400 shadow-inner;
+		@apply flex items-stretch border-r border-l rounded-lg border-dashed border-gray-300 dark:border-gray-600 shadow-inner;
 	}
 
 	.tl-layer.tl-depth-1 {
-		@apply border-b;
+		@apply border-b ;
+
 	}
 
 	/*:global(.tl-layer-container:nth-child(odd)) .tl-layer {
@@ -145,11 +146,11 @@
 	}*/
 
 	.tl-index-odd {
-		@apply bg-gray-100 bg-opacity-50;
+		@apply bg-gray-100 dark:bg-gray-800 bg-opacity-50 dark:bg-opacity-50;
 	}
 
 	.tl-index-even {
-		@apply bg-gray-200 bg-opacity-50;
+		@apply bg-gray-50 dark:bg-gray-900 bg-opacity-50 dark:bg-opacity-50;
 	}
 
 	.tl-layer.tl-depth-1.tl-index-0 {

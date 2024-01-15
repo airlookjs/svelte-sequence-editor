@@ -6,6 +6,7 @@
 	import { uniqueClasses } from '../utils';
 	import { setSequenceContext } from './SequenceContext';
 	import type { createSequence } from '$lib/createSequence';
+	import { cssBackgroundGuides } from '$lib/utils/cssBackgroundGuides';
 
 	export let sequence: ReturnType<typeof createSequence>;
 	export let currentTime: null | number = null;
@@ -31,7 +32,6 @@
 		scrubOverride,
 	});
 
-
 	$: currentTime = $time;
 	let containerClasses = 'tl-sequence-container';
 
@@ -50,20 +50,10 @@
 	};
 
 	const handlePointerUp = () => {
-		//const x = e.clientX - (sequenceEl?.offsetLeft ?? 0);
-		//time.set(Math.min(Math.max((x / $width) * $duration, 0), $duration));
 		selectedHandle.set(null);
 	};
 
-	const getGridBackground = (duration: number, millis = 2000, lineWidth = 0.5, color = '#9993') => {
-		const divisions = duration / millis;
-		const divisionsPercent = 100 / divisions;
-		return `background-image: 
-			linear-gradient(90deg, ${color} ${lineWidth}px, transparent ${lineWidth}px, transparent calc(100% - ${lineWidth}px), ${color} calc(100% - ${lineWidth}px));
-			background-size: ${divisionsPercent}% 100%;`;
-	};
-
-	$: gridBackground = getGridBackground($duration);
+	$: background = cssBackgroundGuides($duration, 2000, {lineWidth: 0.5});
 
 	$: layers = $sequenceData.layers.sort((a, b) => {
 		return a.sortIndex - b.sortIndex;
@@ -89,7 +79,7 @@
 	bind:clientWidth={$width}
 	on:pointermove={handlePointerMove}
 	class={uniqueClasses(`${containerClasses}${className ? ` ${className}` : ''}`)}
-	style={gridBackground}
+	style={background}
 	{...$$restProps}
 >
 	<slot {currentTime} layers={$sequenceData.layers}>
@@ -111,6 +101,6 @@
 
 <style lang="postcss">
 	.tl-sequence-container {
-		@apply select-none pb-6 border rounded-md overflow-hidden relative;
+		@apply select-none border rounded-md overflow-hidden relative text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-900 border-gray-300 dark:border-gray-600;
 	}
 </style>

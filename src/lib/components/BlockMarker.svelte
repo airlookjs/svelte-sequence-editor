@@ -17,7 +17,7 @@
 	$: absoluteTime = time + block.absoluteInTime;
 </script>
 
-<svelte:element this={tag} class="tl-block-marker-wrapper" style="left: {time * timeToPixel}px; top: 1px;">	
+<svelte:element this={tag} class="tl-block-marker-wrapper" style="left: {time * timeToPixel}px; top: 0;">	
 	<!-- Render transparent interactive marker above block content (block handle)-->
 	<div
 		title="marker #{index} at {time}"
@@ -39,7 +39,14 @@
 	</div>
 
 	<!-- Render graphic marker under block content-->
-	<div title="marker at {time}" class="tl-block-marker-indicator"></div>
+	<div title="marker at {time}" class="tl-block-marker-indicator">
+		<div class="top">
+		</div>
+		<div class="flex-grow">
+		</div>
+		<div class="bottom">
+		</div>
+	</div>
 </svelte:element>
 
 <style lang="postcss">
@@ -53,8 +60,14 @@
 	}
 
 	.tl-block-marker-indicator {
-		margin-left: -1px;
-		width: 1px;
-		@apply absolute top-0 pointer-events-none z-0 bg-white opacity-50 h-full cursor-default;
+		margin-left: -0.0625rem;
+		width: 0.0625rem;
+		bottom: 0.0625rem;
+		top: 0.0625rem;
+		@apply flex flex-col absolute pointer-events-none z-0 cursor-default;
+	}
+
+	.tl-block-marker-indicator .top, .tl-block-marker-indicator .bottom {
+		@apply bg-gray-800 dark:bg-gray-100 bg-opacity-50 dark:bg-opacity-50 h-1;
 	}
 </style>

@@ -59,7 +59,7 @@
 	/*.tl-timebar-container {
 	}*/
 	.tl-timebar {
-		@apply flex bg-gray-100 bg-opacity-50 rounded-md shadow-inner py-1;
+		@apply flex bg-gray-50 dark:bg-gray-800 bg-opacity-50 dark:bg-opacity-50 rounded-md shadow-inner py-1;
 	}
 	.tl-timebar-left {
 		@apply flex-none;

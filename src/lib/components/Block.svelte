@@ -196,7 +196,8 @@
 			? 'cursor: grab'
 			: 'cursor: default';
 
-	export let bgColor = 'bg-amber-200';
+		
+	export let bgColor = `bg-amber-200 dark:bg-amber-900`
 
 	// should this also be cursor ew-resize?
 
@@ -289,7 +290,7 @@
 				</div>
 				<div class="tl-block-content" style="{cursorClass};" on:pointerdown={selectBlockHandle}>
 					<slot {noHandles} {disabled} {block} name="content">
-						{title}
+						<span class="inner {bgColor}">{title}</span>
 						{#if block.errors.length > 0}
 							<div class="text-red-500">
 								{#each block.errors as error}
@@ -346,7 +347,7 @@
 	}
 
 	.tl-block-main {
-		@apply flex items-stretch border rounded-sm shadow-sm;
+		@apply flex items-stretch border border-gray-100 dark:border-gray-800 rounded-sm shadow-sm;
 	}
 
 	.tl-block .tl-selected {
