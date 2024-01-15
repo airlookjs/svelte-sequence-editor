@@ -1,5 +1,5 @@
 
-import type { Sequence } from '$lib';
+import type { Sequence } from '$lib/Sequence';
 import type { TSelectedHandle } from '$lib/types';
 import type { Writable } from 'svelte/store';
 

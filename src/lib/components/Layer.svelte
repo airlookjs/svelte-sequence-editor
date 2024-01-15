@@ -11,7 +11,6 @@
 	import { afterUpdate } from 'svelte';
 	import { uniqueClasses } from '../utils';
 	import { fade } from 'svelte/transition';
-	import type { SequenceContext } from '../types';
 	import type { Layer } from '../Layer';
 	import type { Block } from '../Block';
 

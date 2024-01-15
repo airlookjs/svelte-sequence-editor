@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { SequenceContext } from '../types';
 	import { getSequenceContext } from './SequenceContext';
 	import { uniqueClasses } from '../utils';
 
