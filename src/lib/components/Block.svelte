@@ -176,7 +176,6 @@
 
 	//const timeToPixel = (t: number) => (t / $duration) * $width;
 	//$: console.log(accDeltaTime);
-
 	export let tag = 'div';
 	export let noHandles = false;
 	export let disabled = false;
