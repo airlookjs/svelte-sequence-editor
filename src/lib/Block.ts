@@ -17,6 +17,17 @@ const DEFAULT_VALIDATION_OPTIONS: Required<TValidationOptions> = {
 	}
 };
 
+type ISetTimeOptions = {
+	maintainDuration?: boolean;
+	snap?: boolean;
+	snapTimes?: number[];
+	snapThreshold?: number;
+};
+
+const DEFAULT_SET_TIME_OPTIONS : ISetTimeOptions = {
+	snapThreshold : 150
+}
+
 export class Block implements ISequenceChild {
 	layers: Layer[];
 	index: number;
@@ -196,7 +207,7 @@ export class Block implements ISequenceChild {
 
 	public setInTime(
 		value: number,
-		options: { maintainDuration?: boolean; snap?: boolean; snapTimes?: number[] } = {}
+		options: ISetTimeOptions = DEFAULT_SET_TIME_OPTIONS
 	) {
 		const res = this.setTimeCommon(value, tHandles.inTime, options);
 		return res.apply();
@@ -204,7 +215,8 @@ export class Block implements ISequenceChild {
 
 	public setOutTime(
 		value: number,
-		options: { maintainDuration?: boolean; snap?: boolean; snapTimes?: number[] } = {}
+		options: ISetTimeOptions = DEFAULT_SET_TIME_OPTIONS
+
 	) {
 		const res = this.setTimeCommon(value, tHandles.outTime, options);
 		return res.apply();
@@ -223,10 +235,12 @@ export class Block implements ISequenceChild {
 	protected setTimeCommon(
 		inputValue: number,
 		prop: tHandles,
-		options: { maintainDuration?: boolean; snap?: boolean; snapTimes?: number[] } = {},
+		options: ISetTimeOptions = DEFAULT_SET_TIME_OPTIONS,
 		depth = 0
 	) {
 		depth++;
+
+		const { maintainDuration, snap, snapTimes, snapThreshold=DEFAULT_SET_TIME_OPTIONS.snapThreshold } = options;
 
 		const value = this.roundTime(inputValue);
 		const propValidation = this.validations[prop];
@@ -278,16 +292,15 @@ export class Block implements ISequenceChild {
 		// if value is within a certain threshold of a value in snapTimes
 		// snap to that value
 		// TODO: parse in value bases on ui pixels
-		const snapTimeThreshold = 150;
 
-		if (options.snapTimes) {
-			const snaps = options.snapTimes
+		if (snapTimes) {
+			const snaps = snapTimes
 				.map((snapTime) => {
 					// make relative
 					return snapTime - this.parent.getAbsoluteInTime();
 				})
 				.filter((snapTime) => {
-					return Math.abs(setT - snapTime) < snapTimeThreshold;
+					return Math.abs(setT - snapTime) < snapThreshold;
 				})
 				.sort((a, b) => {
 					return Math.abs(setT - a) - Math.abs(setT - b);
@@ -319,7 +332,7 @@ export class Block implements ISequenceChild {
 
 		const expanding = (fwd && prop == 'outTime') || (!fwd && prop == 'inTime');
 
-		if (options?.maintainDuration) {
+		if (maintainDuration) {
 			//console.debug(debugPrefix, 'set opposing to maintain duration');
 			const res = setOp(opC + diff, { maintainDuration: false, snapTimes: [] });
 
@@ -357,13 +370,13 @@ export class Block implements ISequenceChild {
 				if ((isIn && setT < adj[opProp]) || (!isIn && setT > adj[opProp])) {
 					//console.debug(debugPrefix, 'hits adjacent block');
 
-					if (options.snap) {
+					if (snap) {
 						setT = adj[opProp];
 					} else {
 						const res = adj.setTimeCommon(
 							setT,
 							opProp,
-							{ maintainDuration: options.maintainDuration },
+							{ maintainDuration },
 							depth
 						);
 						res.apply();
@@ -429,7 +442,7 @@ export class Block implements ISequenceChild {
 						//
 						const lastChild = layer.blocks[layer.blocks.length - 1];
 
-						if (!isIn && setT - this.inTime < lastChild.outTime && !options.maintainDuration) {
+						if (!isIn && setT - this.inTime < lastChild.outTime && !maintainDuration) {
 							const res = lastChild.setTimeCommon(
 								setT - this.inTime,
 								tHandles.outTime,
@@ -440,7 +453,7 @@ export class Block implements ISequenceChild {
 							setT = this.inTime + res.v1;
 
 							return res;
-						} else if (isIn && !options.maintainDuration) {
+						} else if (isIn && !maintainDuration) {
 							if (this.outTime - setT < lastChild.outTime) {
 								const res = lastChild.setTimeCommon(
 									this.outTime - setT,
@@ -461,7 +474,8 @@ export class Block implements ISequenceChild {
 		return set(setT);
 	}
 
-	public move(delta: number, options: { snap?: boolean; snapTimes?: number[] } = {}) {
+	public move(delta: number, options: Omit<ISetTimeOptions, 'maintainDuration'> = DEFAULT_SET_TIME_OPTIONS,
+		) {
 		if (delta == 0) return;
 
 		const res = this.setTimeCommon(
