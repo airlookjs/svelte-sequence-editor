@@ -46,7 +46,7 @@ export type TSequenceBlockOptions = ISequenceCommonOptions & {
 	outTime?: number; // Initial outTime as absolute milliseconds
 	validations?: TValidationOptions;
 	layers?: Array<TSequenceLayerOptions>;
-	markers?: Array<{ time: number; label: string }>;
+	markers?: Array<{ time: number; title?: string }>;
 };
 
 export interface ISequenceCommon {

@@ -5,6 +5,10 @@
 	import CustomLayer from './CustomLayer.svelte';
 	import { Label, Input } from 'flowbite-svelte';
 
+	import dayjs from 'dayjs';
+	import dayjsDuration from 'dayjs/plugin/duration';
+	dayjs.extend(dayjsDuration);
+
 	const PromoterBlockTemplate = {
 		key: 'promoter',
 		type: 'promoter',
@@ -32,43 +36,40 @@
 						markers: [
 							{
 								time: 1000,
-								label: 'scene 1'
+								title: 'scene 1'
 							},
 							{
 								time: 1050,
-								label: 'scene 2'
+								title: 'scene 2'
 							},
 							{
-								time: 300,
-								label: 'scene 3'
+								time: 300
 							},
 							{
-								time: 4000,
-								label: 'scene 4'
+								time: 4000
 							},
 							{
-								time: 5000,
-								label: 'scene 5'
+								time: 5000
 							},
 							{
 								time: 6000,
-								label: 'scene 6'
+								title: 'scene 6'
 							},
 							{
 								time: 7000,
-								label: 'scene 7'
+								title: 'scene 7'
 							},
 							{
 								time: 8000,
-								label: 'scene 8'
+								title: 'scene 8'
 							},
 							{
 								time: 9000,
-								label: 'scene 9'
+								title: 'scene 9'
 							},
 							{
 								time: 10000,
-								label: 'scene 10'
+								title: 'scene 10'
 							}
 						]
 					}
@@ -181,6 +182,43 @@
 	/*
 	TODO: toggle snapping
 	*/
+
+	const millisInSecond = 1000;
+	const millisInFrame = (framerate: number) => {
+		return (1 / framerate) * millisInSecond;
+	};
+
+	type formatTimeOptions = {
+		framerate?: number;
+		format?: string;
+	};
+	const formatTimeFn = (time: number, options?: formatTimeOptions) => {
+		if (time === undefined || time === null) {
+			return '';
+		}
+
+		time = Math.floor(time);
+
+		let format = options?.format ?? 'HH:mm:ss.SSS';
+		const framerate = options?.framerate ?? 25;
+
+		const duration = dayjs.duration(time, 'milliseconds');
+
+		if (format.includes('FF')) {
+			// calculate remaining frames after smallest unit in format string
+
+			const millis = duration.milliseconds();
+			const frames = Math.floor(millis / millisInFrame(framerate));
+
+			format = format.replace('FF', `${frames}`.padStart(2, '0'));
+		}
+
+		if (format.includes('R')) {
+			format = format.replace('R', `${framerate}`);
+		}
+
+		return `${duration.format(format)}`;
+	};
 </script>
 
 <section class="pb-6">
@@ -219,13 +257,10 @@
 		<Sequence
 			{sequence}
 			bind:currentTime={$time}
+			{formatTimeFn}
 			class="mb-4 w-full dark:border-gray-700 dark:bg-gray-800"
 		>
-			<SequenceTimebar
-				slot="timebar"
-				formatTimeFn={(value) => `${value}`}
-				class="dark:bg-gray-900"
-			/>
+			<SequenceTimebar slot="timebar" class="dark:bg-gray-900" />
 
 			<svelte:fragment slot="layer" let:layer let:index>
 				<CustomLayer data={layer} {index} />

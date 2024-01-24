@@ -120,11 +120,13 @@
 			}
 
 			// if user has cursor over a marker or handle on another block then snap to its time if within a certain threshold
-
 			let res;
+			const snapThreshold = 10 * ($duration / $width); // snap to marker if within 10 pixels regardless of screen width and duration
+
+			const opts = { snap, snapTimes: $snapTimes, snapThreshold };
 
 			if (handle == 'block') {
-				res = block.move(accDeltaTime, { snap: snap, snapTimes: $snapTimes });
+				res = block.move(accDeltaTime, opts);
 				time.set(block.absoluteInTime);
 			} else if (handle == 'inTime') {
 				/*const snapInDelta = $snapValue && $snapValue - (block.inTime + accDeltaTime);
@@ -139,12 +141,12 @@
 					//snap = true;
 				} else {*/
 
-				res = block.setInTime(block.inTime + accDeltaTime, { snap: snap, snapTimes: $snapTimes });
+				res = block.setInTime(block.inTime + accDeltaTime, opts);
 				//}
 
 				time.set(block.absoluteInTime);
 			} else if (handle == 'outTime') {
-				res = block.setOutTime(block.outTime + accDeltaTime, { snap: snap, snapTimes: $snapTimes });
+				res = block.setOutTime(block.outTime + accDeltaTime, opts);
 				time.set(block.absoluteOutTime);
 			}
 
@@ -250,7 +252,12 @@
 					{#if markers.length > 0}
 						<div class="tl-block-markers">
 							{#each markers as marker, index}
-								<BlockMarker time={marker.time} {index} disableSnapping={handle != null} {block}
+								<BlockMarker
+									time={marker.time}
+									title={marker.title}
+									{index}
+									disableSnapping={handle != null}
+									{block}
 								></BlockMarker>
 							{/each}
 						</div>

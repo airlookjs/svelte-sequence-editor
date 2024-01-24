@@ -4,9 +4,15 @@
 
 	import TimebarLabel from './TimebarLabel.svelte';
 
-	const { time, duration, scrubOverride, selectedHandle } = getSequenceContext();
+	const {
+		time,
+		duration,
+		scrubOverride,
+		selectedHandle,
+		formatTimeFn: sequenceFormatTimeFn
+	} = getSequenceContext();
 
-	export let formatTimeFn = (value: number) => `${Math.round(value)}`;
+	export let formatTimeFn = sequenceFormatTimeFn;
 
 	// We could instead have a store for timebarLabels that we loop over to allow showing n number of relevant times and control through context
 	let extraTime: number | null = null;

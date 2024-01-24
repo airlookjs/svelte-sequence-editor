@@ -22,6 +22,8 @@
 	const disabled = writable(false);
 	const snapTimes = writable([]);
 
+	export let formatTimeFn = (value: number) => `${Math.round(value)}`;
+
 	setSequenceContext({
 		time,
 		duration,
@@ -29,7 +31,8 @@
 		width,
 		snapTimes,
 		selectedHandle,
-		scrubOverride
+		scrubOverride,
+		formatTimeFn
 	});
 
 	$: currentTime = $time;
@@ -84,7 +87,7 @@
 >
 	<slot {currentTime} layers={$sequenceData.layers}>
 		<slot name="timebar">
-			<Timebar />
+			<Timebar {formatTimeFn} />
 		</slot>
 
 		<slot name="layers" {layers}>
