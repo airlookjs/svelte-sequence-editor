@@ -4,7 +4,13 @@
 
 	import TimebarLabel from './TimebarLabel.svelte';
 
-	const { time, duration, scrubOverride, selectedHandle, formatTimeFn: sequenceFormatTimeFn  } = getSequenceContext();
+	const {
+		time,
+		duration,
+		scrubOverride,
+		selectedHandle,
+		formatTimeFn: sequenceFormatTimeFn
+	} = getSequenceContext();
 
 	export let formatTimeFn = sequenceFormatTimeFn;
 

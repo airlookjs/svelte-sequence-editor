@@ -24,9 +24,9 @@ type ISetTimeOptions = {
 	snapThreshold?: number;
 };
 
-const DEFAULT_SET_TIME_OPTIONS : ISetTimeOptions = {
-	snapThreshold : 150
-}
+const DEFAULT_SET_TIME_OPTIONS: ISetTimeOptions = {
+	snapThreshold: 150
+};
 
 export class Block implements ISequenceChild {
 	layers: Layer[];
@@ -205,19 +205,12 @@ export class Block implements ISequenceChild {
 		this.setOutTime(this._outTime as number);
 	}
 
-	public setInTime(
-		value: number,
-		options: ISetTimeOptions = DEFAULT_SET_TIME_OPTIONS
-	) {
+	public setInTime(value: number, options: ISetTimeOptions = DEFAULT_SET_TIME_OPTIONS) {
 		const res = this.setTimeCommon(value, tHandles.inTime, options);
 		return res.apply();
 	}
 
-	public setOutTime(
-		value: number,
-		options: ISetTimeOptions = DEFAULT_SET_TIME_OPTIONS
-
-	) {
+	public setOutTime(value: number, options: ISetTimeOptions = DEFAULT_SET_TIME_OPTIONS) {
 		const res = this.setTimeCommon(value, tHandles.outTime, options);
 		return res.apply();
 	}
@@ -240,7 +233,12 @@ export class Block implements ISequenceChild {
 	) {
 		depth++;
 
-		const { maintainDuration, snap, snapTimes, snapThreshold=DEFAULT_SET_TIME_OPTIONS.snapThreshold } = options;
+		const {
+			maintainDuration,
+			snap,
+			snapTimes,
+			snapThreshold = DEFAULT_SET_TIME_OPTIONS.snapThreshold
+		} = options;
 
 		const value = this.roundTime(inputValue);
 		const propValidation = this.validations[prop];
@@ -373,12 +371,7 @@ export class Block implements ISequenceChild {
 					if (snap) {
 						setT = adj[opProp];
 					} else {
-						const res = adj.setTimeCommon(
-							setT,
-							opProp,
-							{ maintainDuration },
-							depth
-						);
+						const res = adj.setTimeCommon(setT, opProp, { maintainDuration }, depth);
 						res.apply();
 						setT = res.v1;
 					}
@@ -474,8 +467,10 @@ export class Block implements ISequenceChild {
 		return set(setT);
 	}
 
-	public move(delta: number, options: Omit<ISetTimeOptions, 'maintainDuration'> = DEFAULT_SET_TIME_OPTIONS,
-		) {
+	public move(
+		delta: number,
+		options: Omit<ISetTimeOptions, 'maintainDuration'> = DEFAULT_SET_TIME_OPTIONS
+	) {
 		if (delta == 0) return;
 
 		const res = this.setTimeCommon(

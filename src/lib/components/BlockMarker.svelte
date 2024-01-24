@@ -18,7 +18,6 @@
 	export let formatTitle = () => {
 		return `${title} (+${formatTimeFn(time)})`;
 	};
-	
 
 	$: timeToPixel = (1 / $duration) * $width;
 	$: absoluteTime = time + block.absoluteInTime;
@@ -33,7 +32,7 @@
 >
 	<!-- Render transparent interactive marker above block content (block handle)-->
 	<div
-		title="{formatTitle()}"
+		title={formatTitle()}
 		class="tl-block-marker-interactive"
 		on:pointerdown
 		on:focus

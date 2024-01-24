@@ -43,13 +43,13 @@
 								title: 'scene 2'
 							},
 							{
-								time: 300,
+								time: 300
 							},
 							{
-								time: 4000,
+								time: 4000
 							},
 							{
-								time: 5000,
+								time: 5000
 							},
 							{
 								time: 6000,
@@ -193,33 +193,32 @@
 		format?: string;
 	};
 	const formatTimeFn = (time: number, options?: formatTimeOptions) => {
-	if (time === undefined || time === null) {
-		return '';
-	}
+		if (time === undefined || time === null) {
+			return '';
+		}
 
-	time = Math.floor(time);
+		time = Math.floor(time);
 
-	let format = options?.format ?? 'HH:mm:ss.SSS';
-	const framerate = options?.framerate ?? 25;
+		let format = options?.format ?? 'HH:mm:ss.SSS';
+		const framerate = options?.framerate ?? 25;
 
-	const duration = dayjs.duration(time, 'milliseconds');
+		const duration = dayjs.duration(time, 'milliseconds');
 
-	if (format.includes('FF')) {
-		// calculate remaining frames after smallest unit in format string
+		if (format.includes('FF')) {
+			// calculate remaining frames after smallest unit in format string
 
-		const millis = duration.milliseconds();
-		const frames = Math.floor(millis / millisInFrame(framerate));
+			const millis = duration.milliseconds();
+			const frames = Math.floor(millis / millisInFrame(framerate));
 
-		format = format.replace('FF', `${frames}`.padStart(2, '0'));
-	}
+			format = format.replace('FF', `${frames}`.padStart(2, '0'));
+		}
 
-	if (format.includes('R')) {
-		format = format.replace('R', `${framerate}`);
-	}
+		if (format.includes('R')) {
+			format = format.replace('R', `${framerate}`);
+		}
 
-	return `${duration.format(format)}`;
-};
-
+		return `${duration.format(format)}`;
+	};
 </script>
 
 <section class="pb-6">
@@ -258,13 +257,10 @@
 		<Sequence
 			{sequence}
 			bind:currentTime={$time}
-			formatTimeFn={formatTimeFn}
+			{formatTimeFn}
 			class="mb-4 w-full dark:border-gray-700 dark:bg-gray-800"
 		>
-			<SequenceTimebar
-				slot="timebar"
-				class="dark:bg-gray-900"
-			/>
+			<SequenceTimebar slot="timebar" class="dark:bg-gray-900" />
 
 			<svelte:fragment slot="layer" let:layer let:index>
 				<CustomLayer data={layer} {index} />

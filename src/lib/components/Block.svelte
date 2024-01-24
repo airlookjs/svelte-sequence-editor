@@ -123,7 +123,6 @@
 			let res;
 			const snapThreshold = 10 * ($duration / $width); // snap to marker if within 10 pixels regardless of screen width and duration
 
-
 			const opts = { snap, snapTimes: $snapTimes, snapThreshold };
 
 			if (handle == 'block') {
@@ -253,7 +252,12 @@
 					{#if markers.length > 0}
 						<div class="tl-block-markers">
 							{#each markers as marker, index}
-								<BlockMarker time={marker.time} title={marker.title} {index} disableSnapping={handle != null} {block}
+								<BlockMarker
+									time={marker.time}
+									title={marker.title}
+									{index}
+									disableSnapping={handle != null}
+									{block}
 								></BlockMarker>
 							{/each}
 						</div>
