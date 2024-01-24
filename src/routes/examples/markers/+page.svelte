@@ -88,7 +88,12 @@
 								blocks: [
 									// defaultblocks
 									{
-										key: 'block1'
+										key: 'block1',
+										validations: {
+											inTime: {
+												fixed: 0
+											}
+										}
 									},
 									{
 										key: 'block2',

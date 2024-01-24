@@ -21,10 +21,16 @@
 	export let markers = block.markers ?? [];
 
 	let blockEl: HTMLElement | null;
-	type BlockHandleType = 'inTime' | 'outTime' | 'block';
 
-	const selectHandle = (type: BlockHandleType) => {
-		$snapTimes = [];
+	let snap = true;
+
+	$: anyFixed =
+		typeof block.validations?.inTime?.fixed == 'number' ||
+		typeof block.validations?.outTime?.fixed == 'number';
+
+	const selectBlockHandle = (e: PointerEvent) => {
+		e.preventDefault();
+		if (noHandles || anyFixed) return;
 
 		snap = true;
 		scrubOverride.set(true);
@@ -32,25 +38,10 @@
 		selectedHandle.set({
 			//layer: block.get,
 			block: block,
-			handle: type,
-			cursor: disabled ? 'cursor: not-allowed' : type == 'block' ? 'grabbing' : 'ew-resize'
+			handle: 'block',
+			cursor: disabled ? 'cursor: not-allowed' : 'grabbing'
 		});
-	};
-	const selectInHandle = (e: PointerEvent) => {
-		e.preventDefault();
-		selectHandle('inTime');
-		time.set(block.absoluteInTime);
-	};
 
-	const selectOutHandle = (e: PointerEvent) => {
-		e.preventDefault();
-		selectHandle('outTime');
-		time.set(block.absoluteOutTime);
-	};
-	const selectBlockHandle = (e: PointerEvent) => {
-		e.preventDefault();
-		if (noHandles) return;
-		selectHandle('block');
 		time.set(block.absoluteInTime);
 	};
 
@@ -75,7 +66,6 @@
 	let snapBlockState = false;
 	let snapBlockStartTime = 0;
 	const snapOffAfterMillis = 500;
-	let snap = true;
 	let lastDeltaTime = 0;
 
 	let accDeltaTime = 0;
@@ -185,11 +175,14 @@
 	let className = '';
 	export { className as class };
 	let moveable = true; // !(block.validations?.inTime?.fixed || block.validations?.outTime?.fixed);
-	$: cursorClass = disabled
-		? 'cursor: not-allowed'
-		: moveable && !noHandles
-			? 'cursor: grab'
-			: 'cursor: default';
+
+	$: cursorStyle = $selectedHandle
+		? ''
+		: disabled
+			? 'cursor: not-allowed'
+			: moveable && !noHandles && !anyFixed
+				? 'cursor: grab'
+				: 'cursor: default';
 
 	export let bgColor = `bg-amber-200 dark:bg-amber-900`;
 
@@ -272,22 +265,14 @@
 								{disabled}
 								{block}
 								selected={handle}
-								fixed={typeof block.validations?.inTime?.fixed == 'number'}
-								on:pointerdown={selectInHandle}
-								on:mouseover={() => {
-									if (handle) return;
-									scrubOverride.set(true);
-									time.set(block.absoluteInTime);
-								}}
-								on:mouseleave={() => {
-									if (handle) return;
-									scrubOverride.set(false);
+								on:selectHandle={() => {
+									snap = true;
 								}}
 							/>
 						{/if}
 					</slot>
 				</div>
-				<div class="tl-block-content" style="{cursorClass};" on:pointerdown={selectBlockHandle}>
+				<div class="tl-block-content" style="{cursorStyle};" on:pointerdown={selectBlockHandle}>
 					<slot {noHandles} {disabled} {block} name="content">
 						<span class="inner">{title}</span>
 						{#if block.errors.length > 0}
@@ -308,16 +293,8 @@
 								selected={handle}
 								{disabled}
 								{block}
-								fixed={typeof block.validations?.outTime?.fixed == 'number'}
-								on:pointerdown={selectOutHandle}
-								on:mouseover={() => {
-									if (handle) return;
-									scrubOverride.set(true);
-									time.set(block.absoluteOutTime);
-								}}
-								on:mouseleave={() => {
-									if (handle) return;
-									scrubOverride.set(false);
+								on:selectHandle={() => {
+									snap = true;
 								}}
 							/>
 						{/if}

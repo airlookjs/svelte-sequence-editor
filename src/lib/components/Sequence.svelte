@@ -66,9 +66,9 @@
 <!-- Could likely be implemented more elegantly pending popular feature request in svelte, but it works like this -->
 <svelte:head>
 	<svelte:element this="style">
-		:root {'{'}
+		:root body *, .tl-handle, .tl-block-marker-interactive {'{'}
 		{#if $selectedHandle?.cursor}
-			cursor: {$selectedHandle.cursor};
+			cursor: {$selectedHandle.cursor} !important;
 		{/if}
 		{'}'}
 	</svelte:element>
