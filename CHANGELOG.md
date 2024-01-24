@@ -1,3 +1,11 @@
+# [4.1.0](https://github.com/airlookjs/svelte-sequence-editor/compare/v4.0.0...v4.1.0) (2024-01-24)
+
+
+### Features
+
+* default dynamic snap threshold ([d8fda87](https://github.com/airlookjs/svelte-sequence-editor/commit/d8fda876949c0cdd3bf30859bf52699c32ea979e))
+* formattimefn and title for markers ([45e3b38](https://github.com/airlookjs/svelte-sequence-editor/commit/45e3b38a83645b15c814d8c593436465635733e2))
+
 # [4.0.0](https://github.com/airlookjs/svelte-sequence-editor/compare/v3.0.0...v4.0.0) (2024-01-15)
 
 
