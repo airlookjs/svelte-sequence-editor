@@ -24,7 +24,7 @@ type ISetTimeOptions = {
 	snapThreshold?: number;
 };
 
-const DEFAULT_SET_TIME_OPTIONS: ISetTimeOptions = {
+const DEFAULT_SET_TIME_OPTIONS = {
 	snapThreshold: 150
 };
 
