@@ -1,7 +1,6 @@
 <!-- @component `BlockHandle` must be descendent of `SequenceBlock`. -->
 
 <script lang="ts">
-	import type { BlockHandleType } from '$lib/types';
 	import type { Block } from '../Block';
 	import { getSequenceContext } from './SequenceContext';
 

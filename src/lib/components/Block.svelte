@@ -32,6 +32,7 @@
 		e.preventDefault();
 		if (noHandles || anyFixed) return;
 
+		$snapTimes = [];
 		snap = true;
 		scrubOverride.set(true);
 
@@ -201,6 +202,7 @@
 	$: offsetLeft = blockEl?.offsetLeft || 0;
 	$: title = block.title || block.key;
 
+	//$: console.log($snapTimes);
 	// TODO: replace all div with svelte:element to allow for svg rendering
 </script>
 
@@ -224,14 +226,17 @@
 	<slot {noHandles} {disabled} {blockLeft} {blockRight} {blockWidth} {block}>
 		<div
 			on:mouseenter={() => {
-				if (!$selectedHandle || $selectedHandle.block.getAbsoluteKey() != block.getAbsoluteKey()) {
+				if ($selectedHandle && $selectedHandle.block.getAbsoluteKey() != block.getAbsoluteKey()) {
+					// unique and sorted snaptimes
 					$snapTimes = [
+						...$snapTimes,
 						block.absoluteInTime,
 						block.absoluteOutTime,
 						...markers.map((m) => m.time + block.absoluteInTime)
-					];
+					]
+						.sort((a, b) => a - b)
+						.filter((v, i, a) => a.indexOf(v) === i);
 				}
-				//console.log($snapTimes);
 			}}
 			class="tl-block relative"
 			style="margin-left: {blockLeft - offsetLeft}px; width: {blockWidth}px;"
