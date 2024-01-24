@@ -26,7 +26,7 @@ export class Block implements ISequenceChild {
 	data?: {
 		[key: string]: unknown;
 	};
-	markers: { time: number; label: string }[] = [];
+	markers: { time: number; title?: string }[] = [];
 	errors: { type: string; message: string }[] = [];
 
 	private _inTime?: number;

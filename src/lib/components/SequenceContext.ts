@@ -12,6 +12,7 @@ export type SequenceContext = {
 	snapTimes: Writable<number[]>;
 	scrubOverride: Writable<boolean>;
 	sequence: Writable<Sequence>;
+	formatTimeFn: (time: number) => string;
 };
 
 export const key = Symbol();

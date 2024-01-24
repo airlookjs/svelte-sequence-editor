@@ -2,9 +2,9 @@
 	import { uniqueClasses } from '../utils';
 	import { getSequenceContext } from './SequenceContext';
 
-	const { duration, width } = getSequenceContext();
+	const { duration, width, formatTimeFn } = getSequenceContext();
 
-	export let formatFn = (value: number) => `${Math.round(value)}`;
+	export let formatFn = formatTimeFn;
 	export let time: number;
 
 	let pos: number;

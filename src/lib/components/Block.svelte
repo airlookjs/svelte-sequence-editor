@@ -250,7 +250,7 @@
 					{#if markers.length > 0}
 						<div class="tl-block-markers">
 							{#each markers as marker, index}
-								<BlockMarker time={marker.time} {index} disableSnapping={handle != null} {block}
+								<BlockMarker time={marker.time} title={marker.title} {index} disableSnapping={handle != null} {block}
 								></BlockMarker>
 							{/each}
 						</div>

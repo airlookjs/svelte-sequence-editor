@@ -4,13 +4,21 @@
 
 	export let time: number;
 	export let index: number;
+	export let title = `Marker #${index + 1}`;
 
 	export let disableSnapping = false;
 	export let block: Block;
 
 	export let tag = 'div';
 
-	const { duration, width, scrubOverride, time: playheadTime } = getSequenceContext();
+	const { duration, width, scrubOverride, time: playheadTime, formatTimeFn } = getSequenceContext();
+
+	//export let format = (value: number) => `${Math.round(value)}`;
+
+	export let formatTitle = () => {
+		return `${title} (+${formatTimeFn(time)})`;
+	};
+	
 
 	$: timeToPixel = (1 / $duration) * $width;
 	$: absoluteTime = time + block.absoluteInTime;
@@ -25,7 +33,7 @@
 >
 	<!-- Render transparent interactive marker above block content (block handle)-->
 	<div
-		title="marker #{index} at {time}"
+		title="{formatTitle()}"
 		class="tl-block-marker-interactive"
 		on:pointerdown
 		on:focus
