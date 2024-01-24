@@ -1,3 +1,10 @@
+## [4.1.1](https://github.com/airlookjs/svelte-sequence-editor/compare/v4.1.0...v4.1.1) (2024-01-24)
+
+
+### Bug Fixes
+
+* cursor style precedence, and block snapping improvements ([d70d233](https://github.com/airlookjs/svelte-sequence-editor/commit/d70d23345b95a9e88cf91b78d604209925299e24))
+
 # [4.1.0](https://github.com/airlookjs/svelte-sequence-editor/compare/v4.0.0...v4.1.0) (2024-01-24)
 
 
