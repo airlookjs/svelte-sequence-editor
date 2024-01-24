@@ -1,3 +1,10 @@
+## [4.1.2](https://github.com/airlookjs/svelte-sequence-editor/compare/v4.1.1...v4.1.2) (2024-01-24)
+
+
+### Bug Fixes
+
+* snaptimes should not be overwritten when interacting with new blocks ([b9b6e61](https://github.com/airlookjs/svelte-sequence-editor/commit/b9b6e610ec11a6de1fa7fb7f36aa2901c830a35b))
+
 ## [4.1.1](https://github.com/airlookjs/svelte-sequence-editor/compare/v4.1.0...v4.1.1) (2024-01-24)
 
 
