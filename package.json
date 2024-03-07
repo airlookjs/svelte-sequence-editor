@@ -60,7 +60,7 @@
 		"flowbite-svelte": "^0.44.22",
 		"lodash": "^4.17.21",
 		"postcss": "^8.4.33",
-		"prettier": "^3.2.4",
+		"prettier": "^3.2.5",
 		"prettier-plugin-svelte": "^3.1.2",
 		"semantic-release": "^22.0.12",
 		"svelte": "^4.2.9",
