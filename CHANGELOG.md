@@ -1,3 +1,10 @@
+## [4.1.3](https://github.com/airlookjs/svelte-sequence-editor/compare/v4.1.2...v4.1.3) (2024-03-20)
+
+
+### Bug Fixes
+
+* tl-sequence-container does not need position relative, causes timeline to appear over modals in chrome ([f7485f6](https://github.com/airlookjs/svelte-sequence-editor/commit/f7485f65a3fe35974ecee33cd8c01d3be275a028))
+
 ## [4.1.2](https://github.com/airlookjs/svelte-sequence-editor/compare/v4.1.1...v4.1.2) (2024-01-24)
 
 
