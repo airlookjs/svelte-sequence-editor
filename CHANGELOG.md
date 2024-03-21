@@ -1,3 +1,10 @@
+## [4.1.6](https://github.com/airlookjs/svelte-sequence-editor/compare/v4.1.5...v4.1.6) (2024-03-21)
+
+
+### Bug Fixes
+
+* calculation of offset left that works inside a relative container ([5470071](https://github.com/airlookjs/svelte-sequence-editor/commit/5470071ae3ca101ee9f813b19afa52bf91db5f2b))
+
 ## [4.1.5](https://github.com/airlookjs/svelte-sequence-editor/compare/v4.1.4...v4.1.5) (2024-03-21)
 
 
