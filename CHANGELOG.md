@@ -1,3 +1,11 @@
+## [4.1.5](https://github.com/airlookjs/svelte-sequence-editor/compare/v4.1.4...v4.1.5) (2024-03-21)
+
+
+### Reverts
+
+* Revert "fix: tl-sequence-container does not need position relative, causes timeline to appear over modals in chrome" ([bbba4dc](https://github.com/airlookjs/svelte-sequence-editor/commit/bbba4dcaa50489b60a936d1a84907f480fb563f4))
+* Revert "fix: strange position: relative inline style issue, resolve with unsetting" ([4e845a8](https://github.com/airlookjs/svelte-sequence-editor/commit/4e845a841081abb0977ae211ccfcbc8332910e5d))
+
 ## [4.1.4](https://github.com/airlookjs/svelte-sequence-editor/compare/v4.1.3...v4.1.4) (2024-03-21)
 
 
