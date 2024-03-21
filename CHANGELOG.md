@@ -1,3 +1,10 @@
+## [4.1.4](https://github.com/airlookjs/svelte-sequence-editor/compare/v4.1.3...v4.1.4) (2024-03-21)
+
+
+### Bug Fixes
+
+* strange position: relative inline style issue, resolve with unsetting ([7b090b3](https://github.com/airlookjs/svelte-sequence-editor/commit/7b090b353692ebbd7cb43a67fcfc14740d4e7d02))
+
 ## [4.1.3](https://github.com/airlookjs/svelte-sequence-editor/compare/v4.1.2...v4.1.3) (2024-03-20)
 
 
