@@ -83,7 +83,6 @@
 	on:pointermove={handlePointerMove}
 	class={uniqueClasses(`${containerClasses}${className ? ` ${className}` : ''}`)}
 	style={background}
-	style:position="unset"
 	{...$$restProps}
 >
 	<slot {currentTime} layers={$sequenceData.layers}>
