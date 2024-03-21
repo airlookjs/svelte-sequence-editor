@@ -104,6 +104,6 @@
 
 <style lang="postcss">
 	.tl-sequence-container {
-		@apply select-none border rounded-md overflow-hidden text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-900 border-gray-300 dark:border-gray-600;
+		@apply select-none border rounded-md overflow-hidden relative text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-900 border-gray-300 dark:border-gray-600;
 	}
 </style>
