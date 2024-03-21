@@ -257,7 +257,7 @@
 		<Sequence {options} {duration} {sequence} />
 	</div>
 
-	<div class="mb-6">
+	<div class="mb-6 relative">
 		<h3 class="mb-2 text-lg">Custom rendering</h3>
 		<Sequence
 			{sequence}

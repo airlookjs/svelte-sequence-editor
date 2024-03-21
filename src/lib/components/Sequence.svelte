@@ -13,10 +13,13 @@
 
 	const sequenceData = sequence.sequence;
 	const duration = sequence.duration;
-	let currentWidth: null | number = null;
+	//let currentWidth: null | number = null;
 
 	const time = writable(currentTime ?? -1);
-	const width = writable(currentWidth ?? 30000);
+	const width = writable( 30000);
+
+	const offsetWidth = writable(0);
+
 	const selectedHandle: TSelectedHandle = writable(null);
 	const scrubOverride = writable(false);
 	const disabled = writable(false);
@@ -46,8 +49,9 @@
 	let sequenceEl: HTMLElement | null;
 
 	const handlePointerMove = (e: PointerEvent) => {
+
 		if (!$selectedHandle && !$scrubOverride) {
-			const x = e.clientX - (sequenceEl?.offsetLeft ?? 0);
+			const x = e.x - (sequenceEl ? sequenceEl?.getBoundingClientRect().left : 0);  //(sequenceEl?.offsetLeft ?? 0);
 			time.set(Math.min(Math.max((x / $width) * $duration, 0), $duration));
 		}
 	};
@@ -80,6 +84,7 @@
 	this={tag}
 	bind:this={sequenceEl}
 	bind:clientWidth={$width}
+	bind:offsetWidth={$offsetWidth}
 	on:pointermove={handlePointerMove}
 	class={uniqueClasses(`${containerClasses}${className ? ` ${className}` : ''}`)}
 	style={background}
@@ -104,6 +109,6 @@
 
 <style lang="postcss">
 	.tl-sequence-container {
-		@apply select-none border rounded-md overflow-hidden relative text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-900 border-gray-300 dark:border-gray-600;
+		@apply select-none border rounded-md overflow-hidden relative text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-900 border-gray-300 dark:border-gray-600 z-0;
 	}
 </style>
