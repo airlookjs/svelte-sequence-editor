@@ -3,11 +3,13 @@
 	import { createSequence } from '$lib/createSequence';
 	import { writable } from 'svelte/store';
 	import CustomLayer from './CustomLayer.svelte';
-	import { Label, Input } from 'flowbite-svelte';
+	import { Label, Input, Button, Modal } from 'flowbite-svelte';
 
 	import dayjs from 'dayjs';
 	import dayjsDuration from 'dayjs/plugin/duration';
 	dayjs.extend(dayjsDuration);
+
+	let modal = false;
 
 	const PromoterBlockTemplate = {
 		key: 'promoter',
@@ -231,6 +233,9 @@
 
 	<h3 class="mb-4 text-lg">Bind data from a form to the sequence editor</h3>
 
+	<Button on:click={() => (modal = true)}>modal, z-index test</Button>
+
+
 	<div class="mb-4">
 		<Label for="duration">Duration</Label>
 		<Input
@@ -273,3 +278,8 @@
 		</Sequence>
 	</div>
 </section>
+
+
+<Modal title="Terms of Service" bind:open={modal} autoclose>
+	<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">Should render on top of timeline</p>
+  </Modal>
